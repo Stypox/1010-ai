@@ -1,7 +1,7 @@
 .vscode/
 
 # CMake
-src/ProjectConfig.h
+src/app/config.h
 CMakeFiles/
 CMakeCache.txt
 Makefile
