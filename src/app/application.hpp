@@ -14,7 +14,9 @@ class Application {
 	static void drawUi();
 
 public:
+	Application() = delete;
+
 	static void run();
 };
 
-}
+} // namespace app

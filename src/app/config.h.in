@@ -5,4 +5,4 @@ constexpr int VERSION_MAJOR = @1010_AI_VERSION_MAJOR@;
 constexpr int VERSION_MINOR = @1010_AI_VERSION_MINOR@;
 constexpr const char* PROJECT_NAME = "@PROJECT_NAME@";
 
-}
+} // namespace app
