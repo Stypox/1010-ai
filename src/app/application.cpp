@@ -13,6 +13,7 @@ sf::RenderWindow Application::window{};
 void Application::drawUi() {
     sf::Text title;
     title.setFont(Resources::font.get());
+    title.setLetterSpacing(1.5f);
     title.setString("Welcome to 1010");
     title.setCharacterSize(20);
     title.setFillColor(textColor);
