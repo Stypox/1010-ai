@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-#include "config.h"
+#include "config.hpp"
 
 namespace app {
 
@@ -21,7 +21,7 @@ void Application::drawUi() {
 void Application::run() {
     window.create(
         sf::VideoMode(800, 600),
-        std::string(app::PROJECT_NAME) + " " + std::to_string(app::VERSION_MAJOR) + "." + std::to_string(app::VERSION_MINOR),
+        std::string(PROJECT_NAME) + " " + std::to_string(VERSION_MAJOR) + "." + std::to_string(VERSION_MINOR),
         sf::Style::Titlebar | sf::Style::Close);
 
     while (window.isOpen()) {

@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 project("${PROJECT_NAME}" VERSION 0.1)
-configure_file(src/app/config.h.in src/app/config.h)
+configure_file(src/app/config.hpp.in src/app/config.hpp)
 
 add_executable("${PROJECT_NAME}" src/main.cpp src/app/application.cpp src/app/resources.cpp)
 
