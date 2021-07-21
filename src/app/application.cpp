@@ -4,6 +4,7 @@
 #include <string>
 
 #include "config.hpp"
+#include "resources.hpp"
 
 namespace app {
 
@@ -11,7 +12,7 @@ sf::RenderWindow Application::window{};
 
 void Application::drawUi() {
     sf::Text title;
-    //title.setFont(sf::Font::loadFromFile("./res/SatellaRegular-ZVVaz.ttf"));
+    title.setFont(Resources::font.get());
     title.setString("Welcome to 1010");
     title.setCharacterSize(20);
     title.setFillColor(textColor);
