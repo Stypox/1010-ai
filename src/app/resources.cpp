@@ -4,7 +4,9 @@ namespace app {
 
 const app::Resource<sf::Font> Resources::font{[]() {
 	sf::Font f;
-	f.loadFromFile("./res/SatellaRegular-ZVVaz.ttf");
+	if (!f.loadFromFile("./res/SatellaRegular-ZVVaz.ttf")) {
+		throw std::runtime_error("Could not load font");
+	}
 	return f;
 }};
 
