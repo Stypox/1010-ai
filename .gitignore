@@ -1,1 +1,8 @@
 .vscode/
+
+# CMake
+src/ProjectConfig.h
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
