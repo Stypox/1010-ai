@@ -1,0 +1,4 @@
+namespace config {
+constexpr int VERSION_MAJOR = @1010_AI_VERSION_MAJOR@;
+constexpr int VERSION_MINOR = @1010_AI_VERSION_MINOR@;
+}
