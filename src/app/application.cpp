@@ -11,6 +11,7 @@ namespace app {
 
 void Application::draw() {
     ui.draw(window);
+    boardDrawable.draw(window);
 }
 
 void Application::run() {

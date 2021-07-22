@@ -7,11 +7,13 @@
 namespace game {
 
 struct Piece {
-	const unsigned char id; // the index of this piece in the allPieces array
+	using id_t = uint8_t;
+
+	const id_t id; // the index of this piece in the allPieces array
 	const sf::Color color;
 	const std::vector<std::vector<bool>> bitmask;
 
-	Piece(const unsigned char id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask);
+	Piece(const id_t id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask);
 };
 
 extern const Piece pieceLong5Vertical;

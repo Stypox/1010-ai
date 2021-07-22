@@ -16,7 +16,9 @@ add_executable(
 	src/util/graphics.cpp
 	src/util/string.cpp
 	src/rend/ui.cpp
+	src/rend/board_drawable.cpp
 	src/game/piece.cpp
+	src/game/board.cpp
 )
 
 target_include_directories("${PROJECT_NAME}" PUBLIC "${PROJECT_BINARY_DIR}" src/)

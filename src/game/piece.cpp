@@ -2,7 +2,7 @@
 
 namespace game {
 
-Piece::Piece(const unsigned char id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask)
+Piece::Piece(const id_t id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask)
 	: id{id}, color{color}, bitmask{bitmask} {}
 
 
