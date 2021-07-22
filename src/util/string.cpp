@@ -6,25 +6,28 @@
 namespace util {
 
 std::string format(const std::string& fmt, ...) {
-	size_t currentSize = fmt.size() * 2;
-	std::string buffer;
-	for (int i = 0; i < 8; ++i) {
-		buffer.resize(currentSize);
 
-		va_list args;
-		va_start(args, fmt);
-		int res = vsnprintf(&buffer[0], currentSize, fmt.c_str(), args);
-		va_end(args);
+	va_list args;
+	va_start(args, fmt);
+	int res = vsnprintf(nullptr, 0, fmt.c_str(), args);
+	va_end(args);
 
-		if (res >= 0) {
-			buffer.resize(res);
-			return buffer;
-		}
-
-		currentSize += currentSize / 2 + 1;
+	if (res < 0) {
+		throw new std::runtime_error{"Could not format string: " + fmt};
 	}
 
-	throw new std::runtime_error{"Could not format string: " + fmt};
+	std::string buffer;
+	buffer.resize(res);
+
+	va_start(args, fmt);
+	res = vsnprintf(&buffer[0], res + 1, fmt.c_str(), args);
+	va_end(args);
+
+	if (res < 0) {
+		// should be unreachable
+		throw new std::runtime_error{"Could not format string: " + fmt};
+	}
+	return buffer;
 }
 
 } // namespace util
