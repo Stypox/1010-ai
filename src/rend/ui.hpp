@@ -8,8 +8,6 @@ namespace rend {
 
 class Ui : Drawable {
 
-	unsigned int points;
-
 	sf::Text titleText;
 	sf::Text pointsText;
 	sf::RectangleShape rightRectangle;

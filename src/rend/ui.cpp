@@ -20,10 +20,8 @@ Ui::Ui() :
     rightRectangle.setFillColor(app::RIGHT_BACKGROUND_COLOR);
 }
 
-void Ui::setPoints(const unsigned int newPoints) {
-	points = newPoints;
-
-	pointsText.setString(util::format(app::STRING_POINTS, newPoints));
+void Ui::setPoints(const unsigned int points) {
+	pointsText.setString(util::format(app::STRING_POINTS, points));
 	util::setOriginAtCenter(pointsText);
     pointsText.setPosition(app::LEFT_SECTION_WIDTH / 2, 55);
 }

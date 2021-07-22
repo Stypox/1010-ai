@@ -14,7 +14,7 @@ constexpr unsigned int LEFT_SECTION_WIDTH = 300;
 constexpr unsigned int RIGHT_SECTION_WIDTH = WINDOW_WIDTH - LEFT_SECTION_WIDTH;
 
 constexpr const char* STRING_TITLE = "Welcome to 1010";
-constexpr const char* STRING_POINTS = "%d points%s";
+constexpr const char* STRING_POINTS = "%d points";
 
 constexpr float LETTER_SPACING = 1.5f;
 constexpr unsigned int HEADER_CHARACTER_SIZE = 20;
