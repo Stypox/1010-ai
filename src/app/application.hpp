@@ -6,14 +6,12 @@ namespace app {
 
 class Application {
 
-	static sf::RenderWindow window;
+	sf::RenderWindow window;
 
-	static void drawUi();
+	void drawUi();
 
 public:
-	Application() = delete;
-
-	static void run();
+	void run();
 };
 
 } // namespace app

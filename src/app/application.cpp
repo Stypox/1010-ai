@@ -9,8 +9,6 @@
 
 namespace app {
 
-sf::RenderWindow Application::window{};
-
 void Application::drawUi() {
     sf::Text title = util::buildText(TITLE, TITLE_CHARACTER_SIZE);
     util::setOriginAtCenter(title);

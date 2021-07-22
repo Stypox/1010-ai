@@ -1,6 +1,7 @@
 #include "app/application.hpp"
 
 int main() {
-    app::Application::run();
+    app::Application app;
+    app.run();
     return 0;
 }
