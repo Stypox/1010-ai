@@ -3,27 +3,31 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-#include "config.hpp"
-#include "resources.hpp"
+#include "app/config.hpp"
+#include "app/constants.hpp"
+#include "util/graphics.hpp"
 
 namespace app {
 
 sf::RenderWindow Application::window{};
 
 void Application::drawUi() {
-    sf::Text title;
-    title.setFont(Resources::font.get());
-    title.setLetterSpacing(1.5f);
-    title.setString("Welcome to 1010");
-    title.setCharacterSize(20);
-    title.setFillColor(textColor);
+    sf::Text title = util::buildText(TITLE, TITLE_CHARACTER_SIZE);
+    util::setOriginAtCenter(title);
+    title.setPosition(LEFT_SECTION_WIDTH / 2, 20);
     window.draw(title);
+
+    sf::RectangleShape rectangle;
+    rectangle.setSize({RIGHT_SECTION_WIDTH, WINDOW_HEIGHT});
+    rectangle.setPosition(LEFT_SECTION_WIDTH, 0);
+    rectangle.setFillColor(RIGHT_BACKGROUND_COLOR);
+    window.draw(rectangle);
 }
 
 void Application::run() {
     window.create(
-        sf::VideoMode(800, 600),
-        std::string(PROJECT_NAME) + " " + std::to_string(VERSION_MAJOR) + "." + std::to_string(VERSION_MINOR),
+        sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
+        WINDOW_NAME,
         sf::Style::Titlebar | sf::Style::Close);
 
     while (window.isOpen()) {
@@ -34,7 +38,7 @@ void Application::run() {
             }
         }
 
-        window.clear(backgroundColor);
+        window.clear(LEFT_BACKGROUND_COLOR);
         drawUi();
         window.display();
     }
