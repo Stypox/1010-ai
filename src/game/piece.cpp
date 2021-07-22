@@ -1,5 +1,7 @@
 #include "piece.hpp"
 
+#include "app/constants.hpp"
+
 namespace game {
 
 Piece::Piece(const id_t id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask)
@@ -8,88 +10,88 @@ Piece::Piece(const id_t id, const sf::Color& color, const std::vector<std::vecto
 
 constexpr bool T = true, F = false;
 
-const Piece pieceLong5Vertical = Piece(0, {209, 106, 91},
+const Piece pieceLong5Vertical = Piece(0, app::COLOR_PIECE_LONG5,
 	{{T},
 	 {T},
 	 {T},
 	 {T},
 	 {T}});
 
-const Piece pieceLong4Vertical = Piece(1, {232, 107, 121},
+const Piece pieceLong4Vertical = Piece(1, app::COLOR_PIECE_LONG4,
 	{{T},
 	 {T},
 	 {T},
 	 {T}});
 
-const Piece pieceLong3Vertical = Piece(2, {236, 149, 80},
+const Piece pieceLong3Vertical = Piece(2, app::COLOR_PIECE_LONG3,
 	{{T},
 	 {T},
 	 {T}});
 
-const Piece pieceLong2Vertical = Piece(3, {255, 198, 57},
+const Piece pieceLong2Vertical = Piece(3, app::COLOR_PIECE_LONG2,
 	{{T},
 	 {T}});
 
-const Piece pieceLong5Horizontal = Piece(4, {209, 106, 91},
+const Piece pieceLong5Horizontal = Piece(4, app::COLOR_PIECE_LONG5,
 	{{T, T, T, T, T}});
 
-const Piece pieceLong4Horizontal = Piece(5, {232, 107, 121},
+const Piece pieceLong4Horizontal = Piece(5, app::COLOR_PIECE_LONG4,
 	{{T, T, T, T}});
 
-const Piece pieceLong3Horizontal = Piece(6, {236, 149, 80},
+const Piece pieceLong3Horizontal = Piece(6, app::COLOR_PIECE_LONG3,
 	{{T, T, T}});
 
-const Piece pieceLong2Horizontal = Piece(7, {255, 198, 57},
+const Piece pieceLong2Horizontal = Piece(7, app::COLOR_PIECE_LONG2,
 	{{T, T}});
 
-const Piece pieceSquare3x3 = Piece(8, {58, 219, 175},
+const Piece pieceSquare3x3 = Piece(8, app::COLOR_PIECE_SQUARE_3X3,
 	{{T, T, T},
 	 {T, T, T},
 	 {T, T, T}});
 
-const Piece pieceSquare2x2 = Piece(9, {148, 220, 94},
+const Piece pieceSquare2x2 = Piece(9, app::COLOR_PIECE_SQUARE_2X2,
 	{{T, T},
 	 {T, T}});
 
 // TLBR = Top, Left, Bottom, Right
 
-const Piece pieceAngle3x3TL = Piece(10, {87, 191, 230},
+const Piece pieceAngle3x3TL = Piece(10, app::COLOR_PIECE_ANGLE_3X3,
 	{{T, T, T},
 	 {T, F, F},
 	 {T, F, F}});
 
-const Piece pieceAngle3x3TR = Piece(11, {87, 191, 230},
+const Piece pieceAngle3x3TR = Piece(11, app::COLOR_PIECE_ANGLE_3X3,
 	{{T, T, T},
 	 {F, F, T},
 	 {F, F, T}});
 
-const Piece pieceAngle3x3BR = Piece(12, {87, 191, 230},
+const Piece pieceAngle3x3BR = Piece(12, app::COLOR_PIECE_ANGLE_3X3,
 	{{F, F, T},
 	 {F, F, T},
 	 {T, T, T}});
 
-const Piece pieceAngle3x3BL = Piece(13, {87, 191, 230},
+const Piece pieceAngle3x3BL = Piece(13, app::COLOR_PIECE_ANGLE_3X3,
 	{{T, F, F},
 	 {T, F, F},
 	 {T, T, T}});
 
-const Piece pieceAngle2x2TL = Piece(14, {89, 203, 133},
+const Piece pieceAngle2x2TL = Piece(14, app::COLOR_PIECE_ANGLE_2X2,
 	{{T, T},
 	 {T, F}});
 
-const Piece pieceAngle2x2TR = Piece(15, {89, 203, 133},
+const Piece pieceAngle2x2TR = Piece(15, app::COLOR_PIECE_ANGLE_2X2,
 	{{T, T},
 	 {F, T}});
 
-const Piece pieceAngle2x2BR = Piece(16, {89, 203, 133},
+const Piece pieceAngle2x2BR = Piece(16, app::COLOR_PIECE_ANGLE_2X2,
 	{{F, T},
 	 {T, T}});
 
-const Piece pieceAngle2x2BL = Piece(17, {89, 203, 133},
+const Piece pieceAngle2x2BL = Piece(17, app::COLOR_PIECE_ANGLE_2X2,
 	{{T, F},
 	 {T, T}});
 
-const Piece pieceSingle = Piece(18, {120, 143, 221},
+const Piece pieceSingle = Piece(18, app::COLOR_PIECE_SINGLE,
 	{{T}});
 
 

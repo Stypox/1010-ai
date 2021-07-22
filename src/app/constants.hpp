@@ -27,4 +27,15 @@ const sf::Color LEFT_BACKGROUND_COLOR = sf::Color{30, 30, 30};
 const sf::Color RIGHT_BACKGROUND_COLOR = sf::Color{20, 20, 20};
 const sf::Color TEXT_COLOR = sf::Color::White;
 
+const sf::Color COLOR_PIECE_NONE = sf::Color{60, 60, 60};
+const sf::Color COLOR_PIECE_LONG5 = sf::Color{209, 106, 91};
+const sf::Color COLOR_PIECE_LONG4 = sf::Color{232, 107, 121};
+const sf::Color COLOR_PIECE_LONG3 = sf::Color{236, 149, 80};
+const sf::Color COLOR_PIECE_LONG2 = sf::Color{255, 198, 57};
+const sf::Color COLOR_PIECE_SQUARE_3X3 = sf::Color{58, 219, 175};
+const sf::Color COLOR_PIECE_SQUARE_2X2 = sf::Color{148, 220, 94};
+const sf::Color COLOR_PIECE_ANGLE_3X3 = sf::Color{87, 191, 230};
+const sf::Color COLOR_PIECE_ANGLE_2X2 = sf::Color{89, 203, 133};
+const sf::Color COLOR_PIECE_SINGLE = sf::Color{120, 143, 221};
+
 } // namespace app

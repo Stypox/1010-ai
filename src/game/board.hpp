@@ -12,9 +12,11 @@ public:
 	static constexpr int BOARD_SIZE = 10;
 
 private:
-	std::array<std::array<Piece::id_t, BOARD_SIZE>, BOARD_SIZE> data{{allPieces.size()}};
+	std::array<std::array<Piece::id_t, BOARD_SIZE>, BOARD_SIZE> data;
 
 public:
+	Board();
+
 	sf::Color colorAt(int x, int y) const;
 };
 

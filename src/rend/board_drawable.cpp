@@ -18,6 +18,8 @@ BoardDrawable::BoardDrawable() {
 										 yBoard + app::RECTANGLE_PADDING + rectangleSpacing * i);
 		}
 	}
+
+	updateBoard({});
 }
 
 void BoardDrawable::updateBoard(const game::Board& board) {
