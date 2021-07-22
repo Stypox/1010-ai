@@ -9,17 +9,8 @@
 
 namespace app {
 
-void Application::drawUi() {
-    sf::Text title = util::buildText(TITLE, TITLE_CHARACTER_SIZE);
-    util::setOriginAtCenter(title);
-    title.setPosition(LEFT_SECTION_WIDTH / 2, 20);
-    window.draw(title);
-
-    sf::RectangleShape rectangle;
-    rectangle.setSize({RIGHT_SECTION_WIDTH, WINDOW_HEIGHT});
-    rectangle.setPosition(LEFT_SECTION_WIDTH, 0);
-    rectangle.setFillColor(RIGHT_BACKGROUND_COLOR);
-    window.draw(rectangle);
+void Application::draw() {
+    ui.draw(window);
 }
 
 void Application::run() {
@@ -37,7 +28,7 @@ void Application::run() {
         }
 
         window.clear(LEFT_BACKGROUND_COLOR);
-        drawUi();
+        draw();
         window.display();
     }
 }

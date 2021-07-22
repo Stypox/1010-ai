@@ -5,12 +5,11 @@
 
 namespace util {
 
-sf::Text buildText(const std::string& text, const unsigned int characterSize) {
+sf::Text buildText(const unsigned int characterSize) {
     sf::Text res;
     res.setFont(app::Resources::font.get());
     res.setLetterSpacing(app::LETTER_SPACING);
     res.setFillColor(app::TEXT_COLOR);
-    res.setString(text);
     res.setCharacterSize(characterSize);
 	return res;
 }
