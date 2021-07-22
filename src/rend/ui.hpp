@@ -9,13 +9,13 @@ namespace rend {
 class Ui : Drawable {
 
 	sf::Text titleText;
-	sf::Text pointsText;
+	sf::Text scoreText;
 	sf::RectangleShape rightRectangle;
 
 public:
 	Ui();
 
-	void setPoints(const unsigned int newPoints);
+	void updateScore(const unsigned int newScore);
 	void draw(sf::RenderWindow& window) override;
 };
 
