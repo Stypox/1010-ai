@@ -5,7 +5,7 @@
 namespace rend {
 
 void PieceDrawable::updatePiece(const game::Piece& piece) {
-	constexpr float rectangleSpacing = app::SQUARE_SIZE + app::SQUARE_PADDING * 2;
+	float rectangleSpacing = zoomPrev * (app::SQUARE_SIZE + app::SQUARE_PADDING * 2);
 	float xPiece = xPrev - piece.bitmask[0].size() * rectangleSpacing / 2.0f;
 	float yPiece = yPrev - piece.bitmask.size() * rectangleSpacing / 2.0f;
 
@@ -14,11 +14,12 @@ void PieceDrawable::updatePiece(const game::Piece& piece) {
 		for (int j = 0; j < piece.bitmask[0].size(); ++j) {
 			if (piece.bitmask[i][j]) {
 				if (rectanglesIndex >= rectangles.size()) {
-					rectangles.push_back(sf::RectangleShape{{app::SQUARE_SIZE, app::SQUARE_SIZE}});
+					rectangles.push_back(sf::RectangleShape{
+						{zoomPrev * app::SQUARE_SIZE, zoomPrev * app::SQUARE_SIZE}});
 				}
 				sf::RectangleShape& rectangle = rectangles[rectanglesIndex];
-				rectangle.setPosition({xPiece + app::SQUARE_PADDING + rectangleSpacing * j,
-									   yPiece + app::SQUARE_PADDING + rectangleSpacing * i});
+				rectangle.setPosition({xPiece + zoomPrev * app::SQUARE_PADDING + rectangleSpacing * j,
+									   yPiece + zoomPrev * app::SQUARE_PADDING + rectangleSpacing * i});
 				rectangle.setFillColor(piece.color);
 				++rectanglesIndex;
 			}
@@ -28,13 +29,15 @@ void PieceDrawable::updatePiece(const game::Piece& piece) {
 	rectangles.resize(rectanglesIndex);
 }
 
-void PieceDrawable::setCenterPosition(const float x, const float y) {
+void PieceDrawable::setCenterPositionAndZoom(const float x, const float y, const float zoom) {
 	const sf::Vector2f toSum{x - xPrev, y - yPrev};
 	for (auto&& rectangle : rectangles) {
-		rectangle.setPosition(rectangle.getPosition() + toSum);
+		rectangle.setSize({zoom * app::SQUARE_SIZE, zoom * app::SQUARE_SIZE});
+		rectangle.setPosition((rectangle.getPosition() - sf::Vector2f{xPrev, yPrev}) / zoomPrev * zoom + sf::Vector2f{x, y});
 	}
 	xPrev = x;
 	yPrev = y;
+	zoomPrev = zoom;
 }
 
 void PieceDrawable::draw(sf::RenderWindow& window) {
