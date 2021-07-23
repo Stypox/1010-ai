@@ -13,8 +13,8 @@ constexpr unsigned int WINDOW_HEIGHT = 600;
 constexpr unsigned int LEFT_SECTION_WIDTH = 300;
 constexpr unsigned int RIGHT_SECTION_WIDTH = WINDOW_WIDTH - LEFT_SECTION_WIDTH;
 
-constexpr unsigned int RECTANGLE_SIZE = 40;
-constexpr unsigned int RECTANGLE_PADDING = 5;
+constexpr unsigned int SQUARE_SIZE = 40;
+constexpr unsigned int SQUARE_PADDING = 5;
 
 constexpr const char* STRING_TITLE = "Welcome to 1010";
 constexpr const char* STRING_POINTS = "%d points";

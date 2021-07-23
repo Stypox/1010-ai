@@ -5,7 +5,7 @@
 namespace rend {
 
 BoardDrawable::BoardDrawable() {
-	constexpr float rectangleSpacing = app::RECTANGLE_SIZE + app::RECTANGLE_PADDING * 2;
+	constexpr float rectangleSpacing = app::SQUARE_SIZE + app::SQUARE_PADDING * 2;
 	constexpr float xBoard = app::LEFT_SECTION_WIDTH
 		+ (app::RIGHT_SECTION_WIDTH - rectangleSpacing * game::Board::BOARD_SIZE) / 2.0f;
 	constexpr float yBoard =
@@ -13,9 +13,9 @@ BoardDrawable::BoardDrawable() {
 
 	for (int i = 0; i < game::Board::BOARD_SIZE; ++i) {
 		for (int j = 0; j < game::Board::BOARD_SIZE; ++j) {
-			rectangles[i][j].setSize({app::RECTANGLE_SIZE, app::RECTANGLE_SIZE});
-			rectangles[i][j].setPosition(xBoard + app::RECTANGLE_PADDING + rectangleSpacing * j,
-										 yBoard + app::RECTANGLE_PADDING + rectangleSpacing * i);
+			rectangles[i][j].setSize({app::SQUARE_SIZE, app::SQUARE_SIZE});
+			rectangles[i][j].setPosition(xBoard + app::SQUARE_PADDING + rectangleSpacing * j,
+										 yBoard + app::SQUARE_PADDING + rectangleSpacing * i);
 		}
 	}
 

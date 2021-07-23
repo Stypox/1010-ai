@@ -4,6 +4,7 @@
 
 #include "rend/ui.hpp"
 #include "rend/board_drawable.hpp"
+#include "rend/piece_drawable.hpp"
 
 namespace app {
 
