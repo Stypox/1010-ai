@@ -55,7 +55,8 @@ void Game::processEvent(const sf::Event& event) {
     } else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
         if (isAPieceBeingMoved) {
             auto [x, y] = pieceDrawables[movedPiece].getUpperLeftVertexPosition();
-            auto [i, j, successful] = boardDrawable.getSquareAtPixel(x, y);
+            constexpr float halfSquareOffset = app::SQUARE_SIZE / 2.0f + app::SQUARE_PADDING;
+            auto [i, j, successful] = boardDrawable.getSquareAtPixel(x + halfSquareOffset, y + halfSquareOffset);
             if (successful && board.placePieceAt(j, i, allPieces[pieces[movedPiece]])) {
                 boardDrawable.updateBoard(board);
                 // remove piece that was used
