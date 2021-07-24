@@ -71,9 +71,12 @@ void Game::onMouseLeftReleased(int x, int y) {
         auto [xPiece, yPiece] = pieceDrawables[movedPiece].getUpperLeftVertexPosition();
         constexpr float halfSquareOffset = app::SQUARE_SIZE / 2.0f + app::SQUARE_PADDING;
         auto [i, j, successful] = boardDrawable.getSquareAtPixel(xPiece + halfSquareOffset, yPiece + halfSquareOffset);
+
         int newPoints; // will be > 0 only if the piece could be placed
         if (successful && (newPoints = board.placePieceAt(j, i, allPieces[pieces[movedPiece]]))) {
+            score += newPoints;
             boardDrawable.updateBoard(board);
+
             // remove piece that was used
             pieces[movedPiece] = pieceNone.id;
             pieceDrawables[movedPiece].updatePiece(pieceNone);
@@ -89,11 +92,16 @@ void Game::onMouseLeftReleased(int x, int y) {
 }
 
 Game::Game()
-        : randomNumberGenerator{std::random_device{}()},
+        : score{0},
+        randomNumberGenerator{std::random_device{}()},
         distribution{0, allPiecesEqualProbability.size() - 1} {
     generateNewPieces();
     resetPiecePositionsAndSizes();
     boardDrawable.updateBoard(board);
+}
+
+int Game::getScore() {
+    return score;
 }
 
 void Game::processEvent(const sf::Event& event) {

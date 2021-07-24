@@ -10,6 +10,7 @@
 namespace app {
 
 void Application::draw() {
+    ui.updateScore(game.getScore());
     ui.draw(window);
     game.draw(window);
 }

@@ -14,6 +14,7 @@ class Game : rend::Drawable {
 
 	Board board;
 	std::array<Piece::id_t, PIECE_COUNT> pieces;
+	int score;
 
 	rend::BoardDrawable boardDrawable;
 	std::array<rend::PieceDrawable, PIECE_COUNT> pieceDrawables;
@@ -33,6 +34,8 @@ class Game : rend::Drawable {
 
 public:
 	Game();
+
+	int getScore();
 
 	void processEvent(const sf::Event& event);
 	void draw(sf::RenderWindow& window) override;
