@@ -23,6 +23,70 @@ void Game::generateNewPieces() {
     }
 }
 
+void Game::onMouseLeftPressed(int x, int y) {
+    if (x < app::LEFT_SECTION_WIDTH && y > app::LEFT_SECTION_TITLE_HEIGHT) {
+        if (y > app::LEFT_SECTION_TITLE_HEIGHT + 2 * app::LEFT_SECTION_PIECE_HEIGHT) {
+            movedPiece = 2;
+        } else if (y > app::LEFT_SECTION_TITLE_HEIGHT + app::LEFT_SECTION_PIECE_HEIGHT) {
+            movedPiece = 1;
+        } else {
+            movedPiece = 0;
+        }
+
+        xGestureStart = x;
+        yGestureStart = y;
+
+        if (pieces[movedPiece] == pieceNone.id) {
+            // prevent moving pieces that have already been used
+            movedPiece = PIECE_COUNT; // i.e. none
+        }
+    }
+}
+
+void Game::onMouseMoved(int x, int y) {
+    if (movedPiece < PIECE_COUNT) { // i.e. if a piece is being moved
+        const float xOriginal = app::LEFT_SECTION_WIDTH / 2;
+        const float yOriginal = app::LEFT_SECTION_TITLE_HEIGHT + app::LEFT_SECTION_PIECE_HEIGHT * (0.5f + movedPiece);
+
+        const float xCenter = xOriginal + x - xGestureStart;
+        const float yCenter = yOriginal + y - yGestureStart;
+
+        float zoom;
+        if (xCenter < app::LEFT_SECTION_WIDTH / 2) {
+            zoom = 0.5f;
+        } else if (xCenter < app::LEFT_SECTION_WIDTH) {
+            zoom = 0.5f + (xCenter - app::LEFT_SECTION_WIDTH / 2.0f) / app::LEFT_SECTION_WIDTH;
+        } else {
+            zoom = 1.0f;
+        }
+
+        pieceDrawables[movedPiece].setCenterPositionAndZoom(xCenter, yCenter, zoom);
+    }
+}
+
+void Game::onMouseLeftReleased(int x, int y) {
+    if (movedPiece < PIECE_COUNT) { // i.e. if a piece is being moved
+        onMouseMoved(x, y); // make sure the piece's position is correct
+
+        auto [xPiece, yPiece] = pieceDrawables[movedPiece].getUpperLeftVertexPosition();
+        constexpr float halfSquareOffset = app::SQUARE_SIZE / 2.0f + app::SQUARE_PADDING;
+        auto [i, j, successful] = boardDrawable.getSquareAtPixel(xPiece + halfSquareOffset, yPiece + halfSquareOffset);
+        if (successful && board.placePieceAt(j, i, allPieces[pieces[movedPiece]])) {
+            boardDrawable.updateBoard(board);
+            // remove piece that was used
+            pieces[movedPiece] = pieceNone.id;
+            pieceDrawables[movedPiece].updatePiece(pieceNone);
+        }
+
+        movedPiece = PIECE_COUNT; // i.e. none
+        resetPiecePositionsAndSizes();
+
+        if (std::all_of(pieces.begin(), pieces.end(), [](Piece::id_t id) { return id == pieceNone.id; })) {
+            generateNewPieces();
+        }
+    }
+}
+
 Game::Game()
         : randomNumberGenerator{std::random_device{}()},
         distribution{0, allPiecesEqualProbability.size() - 1} {
@@ -32,65 +96,12 @@ Game::Game()
 }
 
 void Game::processEvent(const sf::Event& event) {
-    const bool isAPieceBeingMoved = movedPiece < PIECE_COUNT;
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-        if (event.mouseButton.x < app::LEFT_SECTION_WIDTH && event.mouseButton.y > app::LEFT_SECTION_TITLE_HEIGHT) {
-            if (event.mouseButton.y > app::LEFT_SECTION_TITLE_HEIGHT + 2 * app::LEFT_SECTION_PIECE_HEIGHT) {
-                movedPiece = 2;
-            } else if (event.mouseButton.y > app::LEFT_SECTION_TITLE_HEIGHT + app::LEFT_SECTION_PIECE_HEIGHT) {
-                movedPiece = 1;
-            } else {
-                movedPiece = 0;
-            }
-
-            xGestureStart = event.mouseButton.x;
-            yGestureStart = event.mouseButton.y;
-
-            if (pieces[movedPiece] == pieceNone.id) {
-                // prevent moving pieces that have already been used
-                movedPiece = PIECE_COUNT; // i.e. none
-            }
-        }
-
+        onMouseLeftPressed(event.mouseButton.x, event.mouseButton.y);
     } else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
-        if (isAPieceBeingMoved) {
-            auto [x, y] = pieceDrawables[movedPiece].getUpperLeftVertexPosition();
-            constexpr float halfSquareOffset = app::SQUARE_SIZE / 2.0f + app::SQUARE_PADDING;
-            auto [i, j, successful] = boardDrawable.getSquareAtPixel(x + halfSquareOffset, y + halfSquareOffset);
-            if (successful && board.placePieceAt(j, i, allPieces[pieces[movedPiece]])) {
-                boardDrawable.updateBoard(board);
-                // remove piece that was used
-                pieces[movedPiece] = pieceNone.id;
-                pieceDrawables[movedPiece].updatePiece(pieceNone);
-            }
-
-            movedPiece = PIECE_COUNT; // i.e. none
-            resetPiecePositionsAndSizes();
-
-            if (std::all_of(pieces.begin(), pieces.end(), [](Piece::id_t id) { return id == pieceNone.id; })) {
-                generateNewPieces();
-            }
-        }
-
+        onMouseLeftReleased(event.mouseButton.x, event.mouseButton.y);
     } else if (event.type == sf::Event::MouseMoved) {
-        if (isAPieceBeingMoved) {
-            const float xOriginal = app::LEFT_SECTION_WIDTH / 2;
-            const float yOriginal = app::LEFT_SECTION_TITLE_HEIGHT + app::LEFT_SECTION_PIECE_HEIGHT * (0.5f + movedPiece);
-
-            const float x = xOriginal + event.mouseMove.x - xGestureStart;
-            const float y = yOriginal + event.mouseMove.y - yGestureStart;
-
-            float zoom;
-            if (x < app::LEFT_SECTION_WIDTH / 2) {
-                zoom = 0.5f;
-            } else if (x < app::LEFT_SECTION_WIDTH) {
-                zoom = 0.5f + (x - app::LEFT_SECTION_WIDTH / 2.0f) / app::LEFT_SECTION_WIDTH;
-            } else {
-                zoom = 1.0f;
-            }
-
-            pieceDrawables[movedPiece].setCenterPositionAndZoom(x, y, zoom);
-        }
+        onMouseMoved(event.mouseMove.x, event.mouseMove.y);
     }
 }
 
