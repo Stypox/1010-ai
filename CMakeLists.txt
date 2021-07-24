@@ -4,6 +4,7 @@ set(PROJECT_NAME 1010_AI)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_BUILD_TYPE Debug)
 
 project("${PROJECT_NAME}" VERSION 0.1)
 configure_file(src/app/config.hpp.in src/app/config.hpp)
