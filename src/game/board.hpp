@@ -16,7 +16,8 @@ private:
 	std::array<std::array<Piece::id_t, BOARD_SIZE>, BOARD_SIZE> data;
 
 public:
-	sf::Color colorAt(int x, int y) const;
+	sf::Color colorAt(int i, int j) const;
+	bool placePieceAt(int i, int j, const Piece& piece);
 };
 
 } // namespace game

@@ -12,8 +12,10 @@ namespace game {
 class Game : rend::Drawable {
 	static constexpr size_t PIECE_COUNT = 3;
 
-	rend::BoardDrawable boardDrawable;
+	Board board;
 	std::array<Piece::id_t, PIECE_COUNT> pieces;
+
+	rend::BoardDrawable boardDrawable;
 	std::array<rend::PieceDrawable, PIECE_COUNT> pieceDrawables;
 
 	int movedPiece = PIECE_COUNT; // i.e. none

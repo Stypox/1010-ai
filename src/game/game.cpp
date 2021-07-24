@@ -26,6 +26,7 @@ Game::Game()
         distribution{0, allPiecesEqualProbability.size() - 1} {
     generateNewPieces();
     resetPiecePositionsAndSizes();
+    boardDrawable.updateBoard(board);
 }
 
 void Game::processEvent(const sf::Event& event) {
@@ -48,14 +49,19 @@ void Game::processEvent(const sf::Event& event) {
                 movedPiece = PIECE_COUNT; // i.e. none
             }
         }
+
     } else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
         if (isAPieceBeingMoved) {
             // remove piece that was used
+            board.placePieceAt(0, 0, allPieces[pieces[movedPiece]]);
+            boardDrawable.updateBoard(board);
             pieces[movedPiece] = pieceNone.id;
             pieceDrawables[movedPiece].updatePiece(pieceNone);
+
             movedPiece = PIECE_COUNT; // i.e. none
             resetPiecePositionsAndSizes();
         }
+
     } else if (event.type == sf::Event::MouseMoved) {
         if (isAPieceBeingMoved) {
             const float xOriginal = app::LEFT_SECTION_WIDTH / 2;
