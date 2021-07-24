@@ -71,7 +71,8 @@ void Game::onMouseLeftReleased(int x, int y) {
         auto [xPiece, yPiece] = pieceDrawables[movedPiece].getUpperLeftVertexPosition();
         constexpr float halfSquareOffset = app::SQUARE_SIZE / 2.0f + app::SQUARE_PADDING;
         auto [i, j, successful] = boardDrawable.getSquareAtPixel(xPiece + halfSquareOffset, yPiece + halfSquareOffset);
-        if (successful && board.placePieceAt(j, i, allPieces[pieces[movedPiece]])) {
+        int newPoints; // will be > 0 only if the piece could be placed
+        if (successful && (newPoints = board.placePieceAt(j, i, allPieces[pieces[movedPiece]]))) {
             boardDrawable.updateBoard(board);
             // remove piece that was used
             pieces[movedPiece] = pieceNone.id;
