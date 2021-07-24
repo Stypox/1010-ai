@@ -10,9 +10,9 @@ void PieceDrawable::updatePiece(const game::Piece& piece) {
 		return;
 	}
 
-	float rectangleSpacing = zoomPrev * (app::SQUARE_SIZE + app::SQUARE_PADDING * 2);
-	float xPiece = xPrev - piece.bitmask[0].size() * rectangleSpacing / 2.0f;
-	float yPiece = yPrev - piece.bitmask.size() * rectangleSpacing / 2.0f;
+	float squareSpacing = zoomPrev * (app::SQUARE_SIZE + app::SQUARE_PADDING * 2);
+	float xPiece = xPrev - piece.bitmask[0].size() * squareSpacing / 2.0f;
+	float yPiece = yPrev - piece.bitmask.size() * squareSpacing / 2.0f;
 
 	int rectanglesIndex = 0;
 	for (int i = 0; i < piece.bitmask.size(); ++i) {
@@ -23,8 +23,8 @@ void PieceDrawable::updatePiece(const game::Piece& piece) {
 						{zoomPrev * app::SQUARE_SIZE, zoomPrev * app::SQUARE_SIZE}});
 				}
 				sf::RectangleShape& rectangle = rectangles[rectanglesIndex];
-				rectangle.setPosition({xPiece + zoomPrev * app::SQUARE_PADDING + rectangleSpacing * j,
-									   yPiece + zoomPrev * app::SQUARE_PADDING + rectangleSpacing * i});
+				rectangle.setPosition({xPiece + zoomPrev * app::SQUARE_PADDING + squareSpacing * j,
+									   yPiece + zoomPrev * app::SQUARE_PADDING + squareSpacing * i});
 				rectangle.setFillColor(piece.color);
 				++rectanglesIndex;
 			}
