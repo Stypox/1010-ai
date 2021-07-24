@@ -11,7 +11,7 @@ namespace app {
 
 void Application::draw() {
     ui.draw(window);
-    boardDrawable.draw(window);
+    game.draw(window);
 }
 
 void Application::run() {
@@ -25,6 +25,8 @@ void Application::run() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
+            } else {
+                game.processEvent(event);
             }
         }
 

@@ -5,6 +5,11 @@
 namespace rend {
 
 void PieceDrawable::updatePiece(const game::Piece& piece) {
+	if (piece.bitmask.empty()) {
+		rectangles.resize(0);
+		return;
+	}
+
 	float rectangleSpacing = zoomPrev * (app::SQUARE_SIZE + app::SQUARE_PADDING * 2);
 	float xPiece = xPrev - piece.bitmask[0].size() * rectangleSpacing / 2.0f;
 	float yPiece = yPrev - piece.bitmask.size() * rectangleSpacing / 2.0f;

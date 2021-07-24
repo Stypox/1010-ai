@@ -3,8 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "rend/ui.hpp"
-#include "rend/board_drawable.hpp"
-#include "rend/piece_drawable.hpp"
+#include "game/game.hpp"
 
 namespace app {
 
@@ -12,7 +11,7 @@ class Application {
 
 	sf::RenderWindow window;
 	rend::Ui ui;
-	rend::BoardDrawable boardDrawable;
+	game::Game game;
 
 	void draw();
 

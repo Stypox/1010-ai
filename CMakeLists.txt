@@ -20,6 +20,7 @@ add_executable(
 	src/rend/piece_drawable.cpp
 	src/game/piece.cpp
 	src/game/board.cpp
+	src/game/game.cpp
 )
 
 target_include_directories("${PROJECT_NAME}" PUBLIC "${PROJECT_BINARY_DIR}" src/)

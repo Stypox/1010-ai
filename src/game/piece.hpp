@@ -16,6 +16,7 @@ struct Piece {
 	Piece(const id_t id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask);
 };
 
+extern const Piece pieceNone;
 extern const Piece pieceLong5Vertical;
 extern const Piece pieceLong4Vertical;
 extern const Piece pieceLong3Vertical;
@@ -37,7 +38,9 @@ extern const Piece pieceAngle2x2BR;
 extern const Piece pieceAngle2x2BL;
 extern const Piece pieceSingle;
 
-extern const std::array<Piece, 19> allPieces;
+// note: this array also contains pieceNone, which should never be
+// presented to the user
+extern const std::array<Piece, 20> allPieces;
 // pieces are repeated in order to obtain an array where each piece type
 // (i.e. with the same color) occours the same times
 extern const std::array<Piece, 36> allPiecesEqualProbability;

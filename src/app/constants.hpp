@@ -12,6 +12,8 @@ constexpr unsigned int WINDOW_WIDTH = 900;
 constexpr unsigned int WINDOW_HEIGHT = 600;
 constexpr unsigned int LEFT_SECTION_WIDTH = 300;
 constexpr unsigned int RIGHT_SECTION_WIDTH = WINDOW_WIDTH - LEFT_SECTION_WIDTH;
+constexpr unsigned int LEFT_SECTION_TITLE_HEIGHT = 78;
+constexpr unsigned int LEFT_SECTION_PIECE_HEIGHT = 168;
 
 constexpr unsigned int SQUARE_SIZE = 40;
 constexpr unsigned int SQUARE_PADDING = 5;
