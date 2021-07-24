@@ -15,6 +15,8 @@ class PieceDrawable : Drawable {
 	std::vector<sf::RectangleShape> rectangles;
 
 public:
+	std::pair<float, float> getUpperLeftVertexPosition();
+
 	void updatePiece(const game::Piece& piece);
 	void setCenterPositionAndZoom(const float x, const float y, const float zoom);
 	void draw(sf::RenderWindow& window) override;

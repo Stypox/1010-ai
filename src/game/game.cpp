@@ -1,5 +1,7 @@
 #include "game.hpp"
 
+#include <algorithm>
+
 #include "app/constants.hpp"
 
 namespace game {
@@ -52,14 +54,21 @@ void Game::processEvent(const sf::Event& event) {
 
     } else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
         if (isAPieceBeingMoved) {
-            // remove piece that was used
-            board.placePieceAt(0, 0, allPieces[pieces[movedPiece]]);
-            boardDrawable.updateBoard(board);
-            pieces[movedPiece] = pieceNone.id;
-            pieceDrawables[movedPiece].updatePiece(pieceNone);
+            auto [x, y] = pieceDrawables[movedPiece].getUpperLeftVertexPosition();
+            auto [i, j, successful] = boardDrawable.getSquareAtPixel(x, y);
+            if (successful && board.placePieceAt(j, i, allPieces[pieces[movedPiece]])) {
+                boardDrawable.updateBoard(board);
+                // remove piece that was used
+                pieces[movedPiece] = pieceNone.id;
+                pieceDrawables[movedPiece].updatePiece(pieceNone);
+            }
 
             movedPiece = PIECE_COUNT; // i.e. none
             resetPiecePositionsAndSizes();
+
+            if (std::all_of(pieces.begin(), pieces.end(), [](Piece::id_t id) { return id == pieceNone.id; })) {
+                generateNewPieces();
+            }
         }
 
     } else if (event.type == sf::Event::MouseMoved) {

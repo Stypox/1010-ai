@@ -14,6 +14,9 @@ class BoardDrawable : Drawable {
 public:
 	BoardDrawable();
 
+	// returns i, j, successful
+	std::tuple<int, int, bool> getSquareAtPixel(float x, float y);
+
 	void updateBoard(const game::Board& board);
 	void draw(sf::RenderWindow& window) override;
 };

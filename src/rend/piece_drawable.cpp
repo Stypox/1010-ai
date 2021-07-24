@@ -1,8 +1,20 @@
 #include "piece_drawable.hpp"
 
+#include <algorithm>
+
 #include "app/constants.hpp"
 
 namespace rend {
+
+std::pair<float, float> PieceDrawable::getUpperLeftVertexPosition() {
+	float xMin = xPrev, yMin = yPrev;
+	for (auto&& rectangle : rectangles) {
+		auto [x, y] = rectangle.getPosition();
+		xMin = std::min(xMin, x);
+		yMin = std::min(yMin, y);
+	}
+	return {xMin, yMin};
+}
 
 void PieceDrawable::updatePiece(const game::Piece& piece) {
 	if (piece.bitmask.empty()) {
