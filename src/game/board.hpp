@@ -19,6 +19,8 @@ private:
 
 public:
 	sf::Color colorAt(int i, int j) const;
+	bool fitsPieceAt(int i, int j, const Piece& piece) const; // make sure to check before placePieceAt
+	bool fitsPieceAnywhere(const Piece& piece) const;
 	int placePieceAt(int i, int j, const Piece& piece); // returns # of points
 };
 

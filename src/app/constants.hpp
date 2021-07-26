@@ -20,6 +20,8 @@ constexpr unsigned int SQUARE_PADDING = 5;
 
 constexpr const char* STRING_TITLE = "Welcome to 1010";
 constexpr const char* STRING_POINTS = "%d points";
+constexpr const char* STRING_YOU_LOST = "You lost! You scored %d points";
+constexpr const char* STRING_PLAY_AGAIN = "Press SPACE to play again";
 
 constexpr float LETTER_SPACING = 1.5f;
 constexpr unsigned int HEADER_CHARACTER_SIZE = 20;

@@ -31,11 +31,14 @@ class Game : rend::Drawable {
 	void onMouseLeftPressed(int x, int y);
 	void onMouseMoved(int x, int y);
 	void onMouseLeftReleased(int x, int y);
+	void onSpaceReleased();
 
 public:
 	Game();
 
-	int getScore();
+	int getScore() const;
+	bool hasLost() const;
+	void reset();
 
 	void processEvent(const sf::Event& event);
 	void draw(sf::RenderWindow& window) override;

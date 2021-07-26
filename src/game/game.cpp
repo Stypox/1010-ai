@@ -72,9 +72,8 @@ void Game::onMouseLeftReleased(int x, int y) {
         constexpr float halfSquareOffset = app::SQUARE_SIZE / 2.0f + app::SQUARE_PADDING;
         auto [i, j, successful] = boardDrawable.getSquareAtPixel(xPiece + halfSquareOffset, yPiece + halfSquareOffset);
 
-        int newPoints; // will be > 0 only if the piece could be placed
-        if (successful && (newPoints = board.placePieceAt(j, i, allPieces[pieces[movedPiece]]))) {
-            score += newPoints;
+        if (successful && board.fitsPieceAt(j, i, allPieces[pieces[movedPiece]])) {
+            score += board.placePieceAt(j, i, allPieces[pieces[movedPiece]]);
             boardDrawable.updateBoard(board);
 
             // remove piece that was used
@@ -91,6 +90,12 @@ void Game::onMouseLeftReleased(int x, int y) {
     }
 }
 
+void Game::onSpaceReleased() {
+    if (hasLost()) {
+        reset();
+    }
+}
+
 Game::Game()
         : score{0},
         randomNumberGenerator{std::random_device{}()},
@@ -100,8 +105,27 @@ Game::Game()
     boardDrawable.updateBoard(board);
 }
 
-int Game::getScore() {
+int Game::getScore() const {
     return score;
+}
+
+bool Game::hasLost() const {
+    for (int i = 0; i < PIECE_COUNT; ++i) {
+        if (pieces[i] != pieceNone.id) {
+            const Piece& piece = allPieces[pieces[i]];
+            if (board.fitsPieceAnywhere(piece)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+void Game::reset() {
+    score = 0;
+    board = Board();
+    boardDrawable.updateBoard(board);
+    generateNewPieces();
 }
 
 void Game::processEvent(const sf::Event& event) {
@@ -111,6 +135,8 @@ void Game::processEvent(const sf::Event& event) {
         onMouseLeftReleased(event.mouseButton.x, event.mouseButton.y);
     } else if (event.type == sf::Event::MouseMoved) {
         onMouseMoved(event.mouseMove.x, event.mouseMove.y);
+    } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
+        onSpaceReleased();
     }
 }
 

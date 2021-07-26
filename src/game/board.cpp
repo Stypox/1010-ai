@@ -49,7 +49,7 @@ sf::Color Board::colorAt(int i, int j) const {
 	return allPieces[data[i][j]].color;
 }
 
-int Board::placePieceAt(int i, int j, const Piece& piece) {
+bool Board::fitsPieceAt(int i, int j, const Piece& piece) const {
 	for (int a = 0; a < piece.bitmask.size(); ++a) {
 		for (int b = 0; b < piece.bitmask[0].size(); ++b) {
 			if (piece.bitmask[a][b]) {
@@ -60,7 +60,21 @@ int Board::placePieceAt(int i, int j, const Piece& piece) {
 			}
 		}
 	}
+	return true;
+}
 
+bool Board::fitsPieceAnywhere(const Piece& piece) const {
+	for (int i = 0; i < BOARD_SIZE; ++i) {
+		for (int j = 0; j < BOARD_SIZE; ++j) {
+			if (fitsPieceAt(i, j, piece)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+int Board::placePieceAt(int i, int j, const Piece& piece) {
 	int points = 0;
 	for (int a = 0; a < piece.bitmask.size(); ++a) {
 		for (int b = 0; b < piece.bitmask[0].size(); ++b) {
