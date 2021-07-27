@@ -5,11 +5,12 @@
 
 #include "game/board.hpp"
 #include "rend/drawable.hpp"
+#include "app/constants.hpp"
 
 namespace rend {
 
 class BoardDrawable : Drawable {
-	std::array<std::array<sf::RectangleShape, game::Board::BOARD_SIZE>, game::Board::BOARD_SIZE> rectangles;
+	std::array<std::array<sf::RectangleShape, app::BOARD_SIZE>, app::BOARD_SIZE> rectangles;
 
 public:
 	BoardDrawable();

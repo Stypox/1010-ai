@@ -21,8 +21,8 @@ void Ui::updateHasLost(bool hasLost, unsigned int score) {
 		util::setOriginAtCenter(playAgainText);
 
 		constexpr float xText = app::WINDOW_WIDTH - app::RIGHT_SECTION_WIDTH / 2;
-		constexpr float boardHeight = game::Board::BOARD_SIZE * app::SQUARE_SIZE
-			+ 2 * (game::Board::BOARD_SIZE - 1) * app::SQUARE_PADDING;
+		constexpr float boardHeight = app::BOARD_SIZE * app::SQUARE_SIZE
+			+ 2 * (app::BOARD_SIZE - 1) * app::SQUARE_PADDING;
 		constexpr float textDistanceFromBorder = (app::WINDOW_HEIGHT - boardHeight) / 4.0f;
 		youLostText.setPosition(xText, textDistanceFromBorder);
 		playAgainText.setPosition(xText, app::WINDOW_HEIGHT - textDistanceFromBorder);

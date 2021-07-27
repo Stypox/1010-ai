@@ -7,6 +7,8 @@
 
 namespace app {
 
+constexpr unsigned int BOARD_SIZE = 10; // 10x10 squares
+
 const std::string WINDOW_NAME = std::string(PROJECT_NAME) + " " + std::to_string(VERSION_MAJOR) + "." + std::to_string(VERSION_MINOR);
 constexpr unsigned int WINDOW_WIDTH = 900;
 constexpr unsigned int WINDOW_HEIGHT = 600;
