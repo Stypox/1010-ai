@@ -34,6 +34,8 @@ void Application::run() {
         window.clear(LEFT_BACKGROUND_COLOR);
         draw();
         window.display();
+
+        game.tick();
     }
 }
 

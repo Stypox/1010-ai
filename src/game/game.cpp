@@ -144,7 +144,15 @@ void Game::processEvent(const sf::Event& event) {
         onMouseMoved(event.mouseMove.x, event.mouseMove.y);
     } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
         onSpaceReleased();
-    } else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right) {
+    } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) {
+        aIsPressed = true;
+    } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A) {
+        aIsPressed = false;
+    }
+}
+
+void Game::tick() {
+    if (aIsPressed) {
         std::vector<Piece::id_t> availablePieces;
         for (auto piece : pieces) {
             if (piece != pieceNone.id) {

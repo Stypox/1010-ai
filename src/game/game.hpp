@@ -21,6 +21,7 @@ class Game : rend::Drawable {
 
 	int movedPiece = PIECE_COUNT; // i.e. none
 	float xGestureStart, yGestureStart;
+	bool aIsPressed = false;
 
 	std::mt19937 randomNumberGenerator;
     std::uniform_int_distribution<std::mt19937::result_type> distribution;
@@ -42,6 +43,7 @@ public:
 	void reset();
 
 	void processEvent(const sf::Event& event);
+	void tick();
 	void draw(sf::RenderWindow& window) override;
 };
 
