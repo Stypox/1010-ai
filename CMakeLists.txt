@@ -4,7 +4,9 @@ set(PROJECT_NAME 1010_AI)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O3")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O3")
 
 project("${PROJECT_NAME}" VERSION 0.1)
 configure_file(src/app/config.hpp.in src/app/config.hpp)
@@ -22,6 +24,7 @@ add_executable(
 	src/game/piece.cpp
 	src/game/board.cpp
 	src/game/game.cpp
+	src/ai/ai.cpp
 )
 
 target_include_directories("${PROJECT_NAME}" PUBLIC "${PROJECT_BINARY_DIR}" src/)

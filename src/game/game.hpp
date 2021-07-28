@@ -27,6 +27,7 @@ class Game : rend::Drawable {
 
 	void resetPiecePositionsAndSizes();
 	void generateNewPieces();
+	void generateNewPiecesIfNeeded();
 
 	void onMouseLeftPressed(int x, int y);
 	void onMouseMoved(int x, int y);

@@ -1,8 +1,11 @@
 #include "game.hpp"
 
 #include <algorithm>
+#include <vector>
 
 #include "app/constants.hpp"
+#include "ai/move.hpp"
+#include "ai/ai.hpp"
 
 namespace game {
 
@@ -20,6 +23,12 @@ void Game::generateNewPieces() {
         const Piece& piece = allPiecesEqualProbability[distribution(randomNumberGenerator)];
         pieces[i] = piece.id;
         pieceDrawables[i].updatePiece(piece);
+    }
+}
+
+void Game::generateNewPiecesIfNeeded() {
+    if (std::all_of(pieces.begin(), pieces.end(), [](Piece::id_t id) { return id == pieceNone.id; })) {
+        generateNewPieces();
     }
 }
 
@@ -83,10 +92,7 @@ void Game::onMouseLeftReleased(int x, int y) {
 
         movedPiece = PIECE_COUNT; // i.e. none
         resetPiecePositionsAndSizes();
-
-        if (std::all_of(pieces.begin(), pieces.end(), [](Piece::id_t id) { return id == pieceNone.id; })) {
-            generateNewPieces();
-        }
+        generateNewPiecesIfNeeded();
     }
 }
 
@@ -137,6 +143,26 @@ void Game::processEvent(const sf::Event& event) {
         onMouseMoved(event.mouseMove.x, event.mouseMove.y);
     } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
         onSpaceReleased();
+    } else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right) {
+        std::vector<Piece::id_t> availablePieces;
+        for (auto piece : pieces) {
+            if (piece != pieceNone.id) {
+                availablePieces.push_back(piece);
+            }
+        }
+        availablePieces = {availablePieces[rand() % availablePieces.size()]};
+
+        auto moves = ai::getBestMoves(board, availablePieces);
+        for (auto move : moves) {
+            score += board.placePieceAt(move.i, move.j, allPieces[move.id]);
+            boardDrawable.updateBoard(board);
+
+            int usedIndex = std::find(pieces.begin(), pieces.end(), move.id) - pieces.begin();
+            pieces[usedIndex] = pieceNone.id;
+            pieceDrawables[usedIndex].updatePiece(pieceNone);
+            resetPiecePositionsAndSizes();
+            generateNewPiecesIfNeeded();
+        }
     }
 }
 
