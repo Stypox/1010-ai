@@ -21,7 +21,7 @@ void Game::resetPiecePositionsAndSizes() {
 
 void Game::generateNewPieces() {
     for (int i = 0; i < PIECE_COUNT; ++i) {
-        const Piece& piece = allPiecesEqualProbability[distribution(randomNumberGenerator)];
+        const Piece& piece = allPiecesGameProbability[distribution(randomNumberGenerator)];
         pieces[i] = piece.id;
         pieceDrawables[i].updatePiece(piece);
     }
@@ -106,7 +106,7 @@ void Game::onSpaceReleased() {
 Game::Game()
         : score{0},
         randomNumberGenerator{std::random_device{}()},
-        distribution{0, allPiecesEqualProbability.size() - 1} {
+        distribution{0, allPiecesGameProbability.size() - 1} {
     generateNewPieces();
     resetPiecePositionsAndSizes();
     boardDrawable.updateBoard(board);

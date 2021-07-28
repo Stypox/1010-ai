@@ -46,5 +46,7 @@ extern const std::array<Piece, 20> allPieces;
 // pieces are repeated in order to obtain an array where each piece type
 // (i.e. with the same color) occours the same times
 extern const std::array<Piece, 36> allPiecesEqualProbability;
+// pieces are repeated in order to reflect the distribution in the original game
+extern const std::array<Piece, 75> allPiecesGameProbability;
 
 } // namespace game

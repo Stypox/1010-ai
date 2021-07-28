@@ -1,0 +1,39 @@
+Long5Vertical   :xxxxxxxxxxxxxxxxxxxx
+Long4Vertical   :xxxxxxxxxxxxxxxxxxxxxxxxxx
+Long3Vertical   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Long2Vertical   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Long5Horizontal :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Long4Horizontal :xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Long3Horizontal :xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Long2Horizontal :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Square3x3       :xxxxxxxxxxxxxxxxxxxxxxxxxx
+Square2x2       :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Angle3x3TL      :xxxxxxxxxxxxx
+Angle3x3TR      :xxxxxxxxxx
+Angle3x3BR      :xxxxxxxxx
+Angle3x3BL      :xxxxxxxxxxxxxxxxxxxxxxx
+Angle2x2TL      :xxxxxxxxxxxxx
+Angle2x2TR      :xxxxxxxxxxxxxxxxxxxx
+Angle2x2BR      :xxxxxxxxxxxxxxxxx
+Angle2x2BL      :xxxxxxxxxxxxxxx
+Single          :xxxxxxxxxxxxxxxxxxxxxxxx
+
+Long5Vertical   : 3
+Long4Vertical   : 4
+Long3Vertical   : 4
+Long2Vertical   : 6
+Long5Horizontal : 5
+Long4Horizontal : 4
+Long3Horizontal : 4
+Long2Horizontal : 6
+Square3x3       : 4
+Square2x2       : 12
+Angle3x3TL      : 2
+Angle3x3TR      : 2
+Angle3x3BR      : 2
+Angle3x3BL      : 3
+Angle2x2TL      : 2
+Angle2x2TR      : 3
+Angle2x2BR      : 3
+Angle2x2BL      : 2
+Single          : 4
