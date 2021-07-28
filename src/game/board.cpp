@@ -64,8 +64,8 @@ bool Board::fitsPieceAt(int i, int j, const Piece& piece) const {
 }
 
 bool Board::fitsPieceAnywhere(const Piece& piece) const {
-	for (int i = 0; i < app::BOARD_SIZE; ++i) {
-		for (int j = 0; j < app::BOARD_SIZE; ++j) {
+	for (int i = 0; i < app::BOARD_SIZE - piece.height + 1; ++i) {
+		for (int j = 0; j < app::BOARD_SIZE - piece.width + 1; ++j) {
 			if (fitsPieceAt(i, j, piece)) {
 				return true;
 			}
