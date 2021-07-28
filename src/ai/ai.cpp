@@ -47,7 +47,7 @@ std::pair<float, std::vector<Move>> getBestMovesWithScore(const game::Board& boa
 	return {bestScoreSoFar, bestMovesSoFar};
 }
 
-std::vector<Move> getBestMoves(const game::Board& board, std::vector<game::Piece::id_t> availablePieces) {
+std::vector<Move> bruteForce(const game::Board& board, std::vector<game::Piece::id_t> availablePieces) {
 	sort(availablePieces.begin(), availablePieces.end());
 
 	float bestScoreSoFar = 0.0f;

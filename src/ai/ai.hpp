@@ -33,6 +33,6 @@ const std::array<std::pair<game::Piece::id_t, float>, game::allPieces.size()> sc
 	{game::pieceSingle.id,          0.05f / 100},
 };
 
-std::vector<Move> getBestMoves(const game::Board& board, std::vector<game::Piece::id_t> availablePieces);
+std::vector<Move> bruteForce(const game::Board& board, std::vector<game::Piece::id_t> availablePieces);
 
 } // namespace ai

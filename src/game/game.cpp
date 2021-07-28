@@ -152,7 +152,7 @@ void Game::processEvent(const sf::Event& event) {
         }
         availablePieces = {availablePieces[rand() % availablePieces.size()]};
 
-        auto moves = ai::getBestMoves(board, availablePieces);
+        auto moves = ai::bruteForce(board, availablePieces);
         for (auto move : moves) {
             score += board.placePieceAt(move.i, move.j, allPieces[move.id]);
             boardDrawable.updateBoard(board);
