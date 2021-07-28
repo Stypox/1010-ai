@@ -63,4 +63,34 @@ std::vector<Move> bruteForce(const game::Board& board, std::vector<game::Piece::
 	return {bestMovesSoFar.rbegin(), bestMovesSoFar.rend()}; // reverse vector to have ordered moves
 }
 
+std::vector<Move> bestCombinationOfSingleMoves(const game::Board& board, std::vector<game::Piece::id_t> availablePieces) {
+	sort(availablePieces.begin(), availablePieces.end());
+
+	float bestScoreSoFar = 0.0f;
+	std::vector<Move> bestMovesSoFar;
+	do {
+		float score = 0.0f;
+		std::vector<Move> moves;
+		game::Board currentBoard = board;
+		for (auto availablePiece : availablePieces) {
+			auto [partialScore, partialMoves] = getBestMovesWithScore(currentBoard, {availablePiece});
+			if (partialMoves.empty()) {
+				score = 0.0f; // has lost
+				break;
+			}
+
+			score += partialScore;
+			moves.push_back(partialMoves[0]);
+			currentBoard.placePieceAt(partialMoves[0].i, partialMoves[0].j, game::allPieces[availablePiece]);
+		}
+
+		if (score > bestScoreSoFar) {
+			bestScoreSoFar = score;
+			bestMovesSoFar = moves;
+		}
+	} while (std::next_permutation(availablePieces.begin(), availablePieces.end()));
+
+	return bestMovesSoFar;
+}
+
 } // namespace ai

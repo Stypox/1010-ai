@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <iostream>
 
 #include "app/constants.hpp"
 #include "ai/move.hpp"
@@ -150,9 +151,10 @@ void Game::processEvent(const sf::Event& event) {
                 availablePieces.push_back(piece);
             }
         }
-        availablePieces = {availablePieces[rand() % availablePieces.size()]};
+        //availablePieces = {availablePieces[rand() % availablePieces.size()]};
 
-        auto moves = ai::bruteForce(board, availablePieces);
+        auto moves = ai::bestCombinationOfSingleMoves(board, availablePieces);
+        std::cout << "Available pieces: " << availablePieces.size() << " - Moves: " << moves.size() << "\n";
         for (auto move : moves) {
             score += board.placePieceAt(move.i, move.j, allPieces[move.id]);
             boardDrawable.updateBoard(board);
