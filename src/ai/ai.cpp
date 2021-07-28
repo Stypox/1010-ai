@@ -75,8 +75,7 @@ std::vector<Move> bestCombinationOfSingleMoves(const game::Board& board, std::ve
 		for (auto availablePiece : availablePieces) {
 			auto [partialScore, partialMoves] = getBestMovesWithScore(currentBoard, {availablePiece});
 			if (partialMoves.empty()) {
-				score = 0.0f; // has lost
-				break;
+				break; // has lost
 			}
 
 			score += partialScore;
