@@ -50,8 +50,8 @@ sf::Color Board::colorAt(int i, int j) const {
 }
 
 bool Board::fitsPieceAt(int i, int j, const Piece& piece) const {
-	for (int a = 0; a < piece.bitmask.size(); ++a) {
-		for (int b = 0; b < piece.bitmask[0].size(); ++b) {
+	for (int a = 0; a < piece.height; ++a) {
+		for (int b = 0; b < piece.width; ++b) {
 			if (piece.bitmask[a][b]) {
 				int boardi = a + i, boardj = b + j;
 				if (boardi >= app::BOARD_SIZE || boardj >= app::BOARD_SIZE || data[boardi][boardj]) {
@@ -76,8 +76,8 @@ bool Board::fitsPieceAnywhere(const Piece& piece) const {
 
 int Board::placePieceAt(int i, int j, const Piece& piece) {
 	int points = 0;
-	for (int a = 0; a < piece.bitmask.size(); ++a) {
-		for (int b = 0; b < piece.bitmask[0].size(); ++b) {
+	for (int a = 0; a < piece.height; ++a) {
+		for (int b = 0; b < piece.width; ++b) {
 			if (piece.bitmask[a][b]) {
 				++points;
 				data[a + i][b + j] = piece.id;

@@ -17,18 +17,13 @@ std::pair<float, float> PieceDrawable::getUpperLeftVertexPosition() {
 }
 
 void PieceDrawable::updatePiece(const game::Piece& piece) {
-	if (piece.bitmask.empty()) {
-		rectangles.resize(0);
-		return;
-	}
-
 	float squareSpacing = zoomPrev * (app::SQUARE_SIZE + app::SQUARE_PADDING * 2);
-	float xPiece = xPrev - piece.bitmask[0].size() * squareSpacing / 2.0f;
-	float yPiece = yPrev - piece.bitmask.size() * squareSpacing / 2.0f;
+	float xPiece = xPrev - piece.width * squareSpacing / 2.0f;
+	float yPiece = yPrev - piece.height * squareSpacing / 2.0f;
 
 	int rectanglesIndex = 0;
-	for (int i = 0; i < piece.bitmask.size(); ++i) {
-		for (int j = 0; j < piece.bitmask[0].size(); ++j) {
+	for (int i = 0; i < piece.height; ++i) {
+		for (int j = 0; j < piece.width; ++j) {
 			if (piece.bitmask[i][j]) {
 				if (rectanglesIndex >= rectangles.size()) {
 					rectangles.push_back(sf::RectangleShape{
