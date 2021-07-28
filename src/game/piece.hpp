@@ -12,8 +12,8 @@ struct Piece {
 	const id_t id; // the index of this piece in the allPieces array
 	const sf::Color color;
 	const std::vector<std::vector<bool>> bitmask;
-	const int height;
-	const int width;
+	const size_t height;
+	const size_t width;
 
 	Piece(const id_t id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask);
 };
