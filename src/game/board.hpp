@@ -15,6 +15,9 @@ class Board {
 	int clearFullLinesAndColumns(); // returns # of points
 
 public:
+	Board();
+	Board(const std::array<std::array<Piece::id_t, app::BOARD_SIZE>, app::BOARD_SIZE>& data);
+
 	sf::Color colorAt(int i, int j) const;
 	bool fitsPieceAt(int i, int j, const Piece& piece) const; // make sure to check before placePieceAt
 	bool fitsPieceAnywhere(const Piece& piece) const;

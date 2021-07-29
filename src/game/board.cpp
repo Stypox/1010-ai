@@ -45,6 +45,12 @@ int Board::clearFullLinesAndColumns() {
 	return points;
 }
 
+Board::Board()
+		: data{} {}
+
+Board::Board(const std::array<std::array<Piece::id_t, app::BOARD_SIZE>, app::BOARD_SIZE>& data)
+		: data{data} {}
+
 sf::Color Board::colorAt(int i, int j) const {
 	return allPieces[data[i][j]].color;
 }
