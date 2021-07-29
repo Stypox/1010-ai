@@ -172,6 +172,12 @@ void Game::tick() {
 
         auto moves = ai.bestCombinationOfSingleMoves(board, availablePieces);
         for (auto move : moves) {
+            if (!board.fitsPieceAt(move.i, move.j, allPieces[move.id])) {
+                std::cout << "The ai provided an invalid move: " << move.i << " " << move.j << " " << (int)move.id << "\n";
+                useAi = !useAi;
+                break;
+            }
+
             score += board.placePieceAt(move.i, move.j, allPieces[move.id]);
             boardDrawable.updateBoard(board);
 
