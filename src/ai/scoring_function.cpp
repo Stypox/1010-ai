@@ -21,6 +21,9 @@ float FittingPiecesScoringFunction::operator()(const game::Board& board) const {
 	return score;
 }
 
+ConnectedComponentsScoringFunction::ConnectedComponentsScoringFunction(float maxScore)
+		: maxScore{maxScore} {}
+
 float ConnectedComponentsScoringFunction::operator()(const game::Board& board) const {
 	const auto& boardData = board.getData();
 	std::array<std::bitset<app::BOARD_SIZE>, app::BOARD_SIZE> seen{}; // initialize to false
@@ -48,7 +51,10 @@ float ConnectedComponentsScoringFunction::operator()(const game::Board& board) c
 		}
 	}
 
-	return std::max(1.0f - 0.2f * connectedComponentsCount, 0.0f) + 0.2f / connectedComponentsCount;
+	return maxScore * (
+		std::max(1.0f - 0.2f * connectedComponentsCount, 0.0f)
+		+ 0.2f / connectedComponentsCount
+	);
 }
 
 

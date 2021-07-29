@@ -57,7 +57,11 @@ public:
 };
 
 class ConnectedComponentsScoringFunction {
+	const float maxScore;
+
 public:
+	ConnectedComponentsScoringFunction(float maxScore);
+
 	float operator()(const game::Board& board) const;
 };
 
