@@ -184,9 +184,9 @@ void Game::tick() {
             int usedIndex = std::find(pieces.begin(), pieces.end(), move.id) - pieces.begin();
             pieces[usedIndex] = pieceNone.id;
             pieceDrawables[usedIndex].updatePiece(pieceNone);
-            resetPiecePositionsAndSizes();
-            generateNewPiecesIfNeeded();
         }
+        resetPiecePositionsAndSizes();
+        generateNewPiecesIfNeeded();
     }
 }
 
