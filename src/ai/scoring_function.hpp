@@ -66,7 +66,7 @@ public:
 	float operator()(const game::Board& board) const;
 };
 
-std::function<float(const game::Board&)> combineScoringFunctions(
+std::function<float(const game::Board&)> operator+(
 		const std::function<float(const game::Board&)>& first,
 		const std::function<float(const game::Board&)>& second);
 

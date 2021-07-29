@@ -108,10 +108,10 @@ Game::Game()
         : score{0},
         randomNumberGenerator{std::random_device{}()},
         distribution{0, allPiecesGameProbability.size() - 1},
-        ai{ai::combineScoringFunctions(
-            ai::FittingPiecesScoringFunction{ai::fastScoringTable},
-            ai::ConnectedComponentsScoringFunction{0.4f, 5}
-        )} {
+        ai{
+            ai::FittingPiecesScoringFunction{ai::fastScoringTable}
+            + ai::ConnectedComponentsScoringFunction{0.1f, 4}
+        } {
     generateNewPieces();
     resetPiecePositionsAndSizes();
     boardDrawable.updateBoard(board);

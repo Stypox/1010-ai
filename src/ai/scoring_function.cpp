@@ -59,7 +59,7 @@ float ConnectedComponentsScoringFunction::operator()(const game::Board& board) c
 }
 
 
-std::function<float(const game::Board&)> combineScoringFunctions(
+std::function<float(const game::Board&)> operator+(
 		const std::function<float(const game::Board&)>& first,
 		const std::function<float(const game::Board&)>& second) {
 	return [first, second](const game::Board& board) {
