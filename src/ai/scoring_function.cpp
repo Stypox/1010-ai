@@ -1,7 +1,5 @@
 #include "scoring_function.hpp"
 
-#include <functional>
-
 namespace ai {
 
 FittingPiecesScoringFunction::FittingPiecesScoringFunction(
@@ -51,6 +49,15 @@ float ConnectedComponentsScoringFunction::operator()(const game::Board& board) c
 	}
 
 	return std::max(1.0f - 0.2f * connectedComponentsCount, 0.0f) + 0.2f / connectedComponentsCount;
+}
+
+
+std::function<float(const game::Board&)> combineScoringFunctions(
+		const std::function<float(const game::Board&)>& first,
+		const std::function<float(const game::Board&)>& second) {
+	return [first, second](const game::Board& board) {
+		return first(board) + second(board);
+	};
 }
 
 } // namespace ai

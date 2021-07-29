@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "game/board.hpp"
 
 namespace ai {
@@ -58,5 +60,9 @@ class ConnectedComponentsScoringFunction {
 public:
 	float operator()(const game::Board& board) const;
 };
+
+std::function<float(const game::Board&)> combineScoringFunctions(
+		const std::function<float(const game::Board&)>& first,
+		const std::function<float(const game::Board&)>& second);
 
 } // namespace ai
