@@ -145,14 +145,18 @@ void Game::processEvent(const sf::Event& event) {
     } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
         onSpaceReleased();
     } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) {
-        aIsPressed = true;
-    } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A) {
-        aIsPressed = false;
+        useAi = !useAi;
     }
 }
 
 void Game::tick() {
-    if (aIsPressed) {
+    if (useAi) {
+        if (hasLost()) {
+            std::cout<<"Score: "<<score<<"\n";
+            reset();
+            return;
+        }
+
         std::vector<Piece::id_t> availablePieces;
         for (auto piece : pieces) {
             if (piece != pieceNone.id) {
@@ -162,7 +166,6 @@ void Game::tick() {
         //availablePieces = {availablePieces[rand() % availablePieces.size()]};
 
         auto moves = ai::bestCombinationOfSingleMoves(board, availablePieces);
-        std::cout << "Available pieces: " << availablePieces.size() << " - Moves: " << moves.size() << "\n";
         for (auto move : moves) {
             score += board.placePieceAt(move.i, move.j, allPieces[move.id]);
             boardDrawable.updateBoard(board);

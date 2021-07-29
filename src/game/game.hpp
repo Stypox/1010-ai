@@ -21,7 +21,7 @@ class Game : rend::Drawable {
 
 	int movedPiece = PIECE_COUNT; // i.e. none
 	float xGestureStart, yGestureStart;
-	bool aIsPressed = false;
+	bool useAi = false;
 
 	std::mt19937 randomNumberGenerator;
     std::uniform_int_distribution<std::mt19937::result_type> distribution;
