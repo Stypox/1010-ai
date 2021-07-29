@@ -48,7 +48,7 @@ const std::vector<std::pair<game::Piece::id_t, float>> fastScoringTable {
 // the base cases used in evaluation loops (where bestScoreSoFar starts at 0)
 
 class FittingPiecesScoringFunction {
-	std::vector<std::pair<game::Piece::id_t, float>> scoringTable;
+	const std::vector<std::pair<game::Piece::id_t, float>> scoringTable;
 
 public:
 	FittingPiecesScoringFunction(const std::vector<std::pair<game::Piece::id_t, float>>& scoringTable);
