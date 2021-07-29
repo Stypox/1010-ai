@@ -51,6 +51,10 @@ Board::Board()
 Board::Board(const std::array<std::array<Piece::id_t, app::BOARD_SIZE>, app::BOARD_SIZE>& data)
 		: data{data} {}
 
+const std::array<std::array<Piece::id_t, app::BOARD_SIZE>, app::BOARD_SIZE>& Board::getData() const {
+	return data;
+}
+
 sf::Color Board::colorAt(int i, int j) const {
 	return allPieces[data[i][j]].color;
 }

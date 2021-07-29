@@ -54,4 +54,9 @@ public:
 	float operator()(const game::Board& board) const;
 };
 
+class ConnectedComponentsScoringFunction {
+public:
+	float operator()(const game::Board& board) const;
+};
+
 } // namespace ai
