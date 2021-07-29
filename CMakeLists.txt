@@ -25,6 +25,7 @@ add_executable(
 	src/game/board.cpp
 	src/game/game.cpp
 	src/ai/ai.cpp
+	src/ai/scoring_function.cpp
 )
 
 target_include_directories("${PROJECT_NAME}" PUBLIC "${PROJECT_BINARY_DIR}" src/)

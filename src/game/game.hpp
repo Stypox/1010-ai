@@ -6,6 +6,7 @@
 #include "rend/drawable.hpp"
 #include "rend/board_drawable.hpp"
 #include "rend/piece_drawable.hpp"
+#include "ai/ai.hpp"
 
 namespace game {
 
@@ -15,6 +16,7 @@ class Game : rend::Drawable {
 	Board board;
 	std::array<Piece::id_t, PIECE_COUNT> pieces;
 	int score;
+	ai::Ai ai;
 
 	rend::BoardDrawable boardDrawable;
 	std::array<rend::PieceDrawable, PIECE_COUNT> pieceDrawables;

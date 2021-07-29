@@ -7,6 +7,7 @@
 #include "app/constants.hpp"
 #include "ai/move.hpp"
 #include "ai/ai.hpp"
+#include "ai/scoring_function.hpp"
 
 namespace game {
 
@@ -106,7 +107,8 @@ void Game::onSpaceReleased() {
 Game::Game()
         : score{0},
         randomNumberGenerator{std::random_device{}()},
-        distribution{0, allPiecesGameProbability.size() - 1} {
+        distribution{0, allPiecesGameProbability.size() - 1},
+        ai{ai::calculateScore} {
     generateNewPieces();
     resetPiecePositionsAndSizes();
     boardDrawable.updateBoard(board);
@@ -165,7 +167,7 @@ void Game::tick() {
         }
         //availablePieces = {availablePieces[rand() % availablePieces.size()]};
 
-        auto moves = ai::bestCombinationOfSingleMoves(board, availablePieces);
+        auto moves = ai.bestCombinationOfSingleMoves(board, availablePieces);
         for (auto move : moves) {
             score += board.placePieceAt(move.i, move.j, allPieces[move.id]);
             boardDrawable.updateBoard(board);
