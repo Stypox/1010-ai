@@ -6,9 +6,8 @@ namespace ai {
 
 // the numerator represents how valuable it is to have an available space for that piece
 // the denominator is the maximum number of occourrences of the piece
-const std::array<std::pair<game::Piece::id_t, float>, game::allPieces.size()> scoringTable {
+const std::vector<std::pair<game::Piece::id_t, float>> fullScoringTable {
 	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
-	{game::pieceNone.id,            0.00f},
 	{game::pieceLong5Vertical.id,   0.25f /  60},
 	{game::pieceLong4Vertical.id,   0.15f /  70},
 	{game::pieceLong3Vertical.id,   0.07f /  80},
@@ -30,6 +29,25 @@ const std::array<std::pair<game::Piece::id_t, float>, game::allPieces.size()> sc
 	{game::pieceSingle.id,          0.05f / 100},
 };
 
-float calculateScore(const game::Board& board);
+const std::vector<std::pair<game::Piece::id_t, float>> fastScoringTable {
+	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
+	{game::pieceLong5Vertical.id,   0.25f /  60},
+	{game::pieceLong5Horizontal.id, 0.25f /  60},
+	{game::pieceSquare3x3.id,       1.00f /  64},
+	{game::pieceSquare2x2.id,       0.50f /  81},
+	{game::pieceAngle3x3TL.id,      0.10f /  64},
+	{game::pieceAngle3x3TR.id,      0.10f /  64},
+	{game::pieceAngle3x3BR.id,      0.10f /  64},
+	{game::pieceAngle3x3BL.id,      0.10f /  64},
+};
+
+class FittingPiecesScoringFunction {
+	std::vector<std::pair<game::Piece::id_t, float>> scoringTable;
+
+public:
+	FittingPiecesScoringFunction(const std::vector<std::pair<game::Piece::id_t, float>>& scoringTable);
+
+	float operator()(const game::Board& board) const;
+};
 
 } // namespace ai

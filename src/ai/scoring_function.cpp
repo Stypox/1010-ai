@@ -2,7 +2,11 @@
 
 namespace ai {
 
-float calculateScore(const game::Board& board) {
+FittingPiecesScoringFunction::FittingPiecesScoringFunction(
+		const std::vector<std::pair<game::Piece::id_t, float>>& scoringTable)
+		: scoringTable{scoringTable} {}
+
+float FittingPiecesScoringFunction::operator()(const game::Board& board) const {
 	float score = 0.0f;
 	for (const auto& [id, partialScore] : scoringTable) {
 		const game::Piece& piece = game::allPieces[id];

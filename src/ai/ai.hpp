@@ -9,7 +9,7 @@
 namespace ai {
 
 class Ai {
-	std::function<float(const game::Board&)> scoringFunction;
+	const std::function<float(const game::Board&)> scoringFunction;
 
 	std::pair<float, std::vector<Move>> bruteForceWithScore(const game::Board& board, const std::vector<game::Piece::id_t>& availablePieces);
 
