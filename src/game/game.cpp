@@ -111,6 +111,7 @@ Game::Game()
         ai{
             ai::FittingPiecesScoringFunction{ai::fastScoringTable}
             + ai::ConnectedComponentsScoringFunction{0.1f, 4}
+            + ai::BiggestRectangleScoringFunction{0.1f}
         } {
     generateNewPieces();
     resetPiecePositionsAndSizes();

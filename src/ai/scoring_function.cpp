@@ -1,5 +1,7 @@
 #include "scoring_function.hpp"
 
+#include <stack>
+
 namespace ai {
 
 FittingPiecesScoringFunction::FittingPiecesScoringFunction(
@@ -25,6 +27,8 @@ ConnectedComponentsScoringFunction::ConnectedComponentsScoringFunction(float max
 		: maxScore{maxScore}, penalizeSmallerThan{penalizeSmallerThan} {}
 
 float ConnectedComponentsScoringFunction::operator()(const game::Board& board) const {
+	// basically bucket fill multiple times, runs in O(N*M)
+
 	const auto& boardData = board.getData();
 	std::array<std::bitset<app::BOARD_SIZE>, app::BOARD_SIZE> seen{}; // initialize to false
 
@@ -56,6 +60,54 @@ float ConnectedComponentsScoringFunction::operator()(const game::Board& board) c
 
 	return maxScore * std::max(1.0f - 0.2f * smallConnectedComponents,
 		0.2f / (smallConnectedComponents + 1));
+}
+
+BiggestRectangleScoringFunction::BiggestRectangleScoringFunction(float maxScore)
+		: maxScore{maxScore} {}
+
+float BiggestRectangleScoringFunction::operator()(const game::Board& board) const {
+	// https://www.drdobbs.com/database/the-maximal-rectangle-problem/184410529
+	// runs in O(N*M)
+
+	const auto& boardData = board.getData();
+	std::array<int, app::BOARD_SIZE + 1> spacesRight{}; // the last element will stay 0
+
+	int bestArea = 0;
+	for (int j = app::BOARD_SIZE - 1; j >= 0; --j) {
+		// spacesRight will contain the number of spaces to the
+		// right of each square in the current column (the j-th)
+		for (int i = 0; i < app::BOARD_SIZE; ++i) {
+			if (boardData[i][j] == game::pieceNone.id) {
+				++spacesRight[i];
+			} else {
+				spacesRight[i] = 0;
+			}
+		}
+
+		int prevSpacesRight = 0; // i.e. the width of the previous iteration
+		std::stack<std::pair<int, int>> rectangles; // (startingLine, width (i.e. spacesRight))
+		for (int i = 0; i < app::BOARD_SIZE + 1; ++i) {
+			if (spacesRight[i] > prevSpacesRight) {
+				rectangles.push({i, spacesRight[i]});
+			} else {
+				int lastStartingLine = -1;
+				// pop from the stack all of the rectangles that do not fit anymore
+				while (!rectangles.empty() && rectangles.top().second > spacesRight[i]) {
+					auto [startingLine, width] = rectangles.top();
+					rectangles.pop();
+					bestArea = std::max(bestArea, (i - startingLine) * width); // calculate area
+					lastStartingLine = startingLine;
+				}
+
+				if (lastStartingLine >= 0) {
+					rectangles.push({lastStartingLine, spacesRight[i]});
+				}
+			}
+			prevSpacesRight = spacesRight[i];
+		}
+	}
+
+	return maxScore * bestArea / (app::BOARD_SIZE * app::BOARD_SIZE);
 }
 
 
