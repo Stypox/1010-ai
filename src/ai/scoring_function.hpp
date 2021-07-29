@@ -39,6 +39,7 @@ const std::vector<std::pair<game::Piece::id_t, float>> fastScoringTable {
 	{game::pieceAngle3x3TR.id,      0.10f /  64},
 	{game::pieceAngle3x3BR.id,      0.10f /  64},
 	{game::pieceAngle3x3BL.id,      0.10f /  64},
+	{game::pieceSingle.id,          0.05f / 100},
 };
 
 // scoring functions should return a score > 0, so that it compares better than
