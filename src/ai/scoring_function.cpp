@@ -21,40 +21,41 @@ float FittingPiecesScoringFunction::operator()(const game::Board& board) const {
 	return score;
 }
 
-ConnectedComponentsScoringFunction::ConnectedComponentsScoringFunction(float maxScore)
-		: maxScore{maxScore} {}
+ConnectedComponentsScoringFunction::ConnectedComponentsScoringFunction(float maxScore, int penalizeSmallerThan)
+		: maxScore{maxScore}, penalizeSmallerThan{penalizeSmallerThan} {}
 
 float ConnectedComponentsScoringFunction::operator()(const game::Board& board) const {
 	const auto& boardData = board.getData();
 	std::array<std::bitset<app::BOARD_SIZE>, app::BOARD_SIZE> seen{}; // initialize to false
 
-	std::function<void(int, int, bool)> dfs = [&boardData, &seen, &dfs](int i, int j, bool filled) {
+	std::function<int(int, int, bool)> dfs = [&boardData, &seen, &dfs](int i, int j, bool filled) {
 		if (i < 0 || i >= app::BOARD_SIZE || j < 0 || j >= app::BOARD_SIZE
 				|| seen[i][j] || filled != (boardData[i][j] == game::pieceNone.id)) {
-			return;
+			return 0;
 		}
 
 		seen[i][j] = true;
-		dfs(i + 1, j,     filled);
-		dfs(i - 1, j,     filled);
-		dfs(i,     j + 1, filled);
-		dfs(i,     j - 1, filled);
+		return 1
+			+ dfs(i + 1, j,     filled);
+			+ dfs(i - 1, j,     filled);
+			+ dfs(i,     j + 1, filled);
+			+ dfs(i,     j - 1, filled);
 	};
 
-	int connectedComponentsCount = 0;
+	int smallConnectedComponents = 0;
 	for (int i = 0; i < app::BOARD_SIZE; ++i) {
 		for (int j = 0; j < app::BOARD_SIZE; ++j) {
 			if (!seen[i][j]) {
-				++connectedComponentsCount;
-				dfs(i, j, boardData[i][j] == game::pieceNone.id);
+				int componentSize = dfs(i, j, boardData[i][j] == game::pieceNone.id);
+				if (componentSize < penalizeSmallerThan) {
+					++smallConnectedComponents;
+				}
 			}
 		}
 	}
 
-	return maxScore * (
-		std::max(1.0f - 0.2f * connectedComponentsCount, 0.0f)
-		+ 0.2f / connectedComponentsCount
-	);
+	return maxScore * std::max(1.0f - 0.2f * smallConnectedComponents,
+		0.2f / (smallConnectedComponents + 1));
 }
 
 

@@ -58,9 +58,10 @@ public:
 
 class ConnectedComponentsScoringFunction {
 	const float maxScore;
+	const int penalizeSmallerThan;
 
 public:
-	ConnectedComponentsScoringFunction(float maxScore);
+	ConnectedComponentsScoringFunction(float maxScore, int penalizeSmallerThan);
 
 	float operator()(const game::Board& board) const;
 };
