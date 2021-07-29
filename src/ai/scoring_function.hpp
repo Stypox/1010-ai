@@ -41,6 +41,9 @@ const std::vector<std::pair<game::Piece::id_t, float>> fastScoringTable {
 	{game::pieceAngle3x3BL.id,      0.10f /  64},
 };
 
+// scoring functions should return a score > 0, so that it compares better than
+// the base cases used in evaluation loops (where bestScoreSoFar starts at 0)
+
 class FittingPiecesScoringFunction {
 	std::vector<std::pair<game::Piece::id_t, float>> scoringTable;
 

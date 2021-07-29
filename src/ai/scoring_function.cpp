@@ -7,7 +7,7 @@ FittingPiecesScoringFunction::FittingPiecesScoringFunction(
 		: scoringTable{scoringTable} {}
 
 float FittingPiecesScoringFunction::operator()(const game::Board& board) const {
-	float score = 0.0f;
+	float score = 0.01f; // always greater than 0, so that it compares better than the score used as the base case
 	for (const auto& [id, partialScore] : scoringTable) {
 		const game::Piece& piece = game::allPieces[id];
 		for (int i = 0; i < app::BOARD_SIZE - piece.height + 1; ++i) {
