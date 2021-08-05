@@ -49,15 +49,9 @@ int Game::getScore() const {
 }
 
 bool Game::hasLost() const {
-    for (int i = 0; i < app::PIECE_COUNT; ++i) {
-        if (pieces[i] != pieceNone.id) {
-            const Piece& piece = allPieces[pieces[i]];
-            if (board.fitsPieceAnywhere(piece)) {
-                return false;
-            }
-        }
-    }
-    return true;
+    return !std::any_of(pieces.begin(), pieces.end(), [this](Piece::id_t id) {
+        return id != pieceNone.id && board.fitsPieceAnywhere(allPieces[id]);
+    });
 }
 
 
