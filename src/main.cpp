@@ -2,6 +2,7 @@
 #include <stypox/argparser.hpp>
 
 #include "app/application.hpp"
+#include "app/no_ui_application.hpp"
 #include "game/game.hpp"
 
 int main(int argc, char const* argv[]) {
@@ -35,7 +36,7 @@ int main(int argc, char const* argv[]) {
 	argParser.validate();
 
     if (noUi) {
-
+		app::NoUiApplication{game::Game{}}.run();
     } else {
         app::Application{game::Game{}}.run();
     }

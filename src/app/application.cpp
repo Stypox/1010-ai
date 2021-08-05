@@ -17,7 +17,7 @@ void Application::draw() {
 
 
 Application::Application(const game::Game& game)
-    : game{game} {}
+        : game{game} {}
 
 
 void Application::run() {

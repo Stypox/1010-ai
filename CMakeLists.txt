@@ -17,6 +17,7 @@ add_executable(
 	"${PROJECT_NAME}"
 	src/main.cpp
 	src/app/application.cpp
+	src/app/no_ui_application.cpp
 	src/app/resources.cpp
 	src/util/graphics.cpp
 	src/util/string.cpp
