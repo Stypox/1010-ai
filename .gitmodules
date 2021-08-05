@@ -1,0 +1,3 @@
+[submodule "lib/arg-parser"]
+	path = lib/arg-parser
+	url = https://github.com/Stypox/arg-parser.git
