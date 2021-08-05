@@ -186,6 +186,11 @@ void Game::tick() {
             pieces[usedIndex] = pieceNone.id;
             pieceDrawables[usedIndex].updatePiece(pieceNone);
         }
+        if (moves.empty()) {
+            std::cout << "The ai provided an no moves\n";
+            useAi = !useAi;
+        }
+
         resetPiecePositionsAndSizes();
         generateNewPiecesIfNeeded();
     }
