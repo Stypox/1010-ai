@@ -19,6 +19,7 @@ constexpr unsigned int LEFT_SECTION_PIECE_HEIGHT = 168;
 
 constexpr unsigned int SQUARE_SIZE = 40;
 constexpr unsigned int SQUARE_PADDING = 5;
+constexpr unsigned int PIECE_COUNT = 3;
 
 constexpr const char* STRING_TITLE = "Welcome to 1010";
 constexpr const char* STRING_POINTS = "%d points";

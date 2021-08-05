@@ -10,43 +10,34 @@
 
 namespace game {
 
-class Game : rend::Drawable {
-	static constexpr size_t PIECE_COUNT = 3;
+class Game {
 
 	Board board;
-	std::array<Piece::id_t, PIECE_COUNT> pieces;
+	std::array<Piece::id_t, app::PIECE_COUNT> pieces;
 	int score;
+
 	ai::Ai ai;
-
-	rend::BoardDrawable boardDrawable;
-	std::array<rend::PieceDrawable, PIECE_COUNT> pieceDrawables;
-
-	int movedPiece = PIECE_COUNT; // i.e. none
-	float xGestureStart, yGestureStart;
 	bool useAi = false;
 
 	std::mt19937 randomNumberGenerator;
     std::uniform_int_distribution<std::mt19937::result_type> distribution;
 
-	void resetPiecePositionsAndSizes();
 	void generateNewPieces();
 	void generateNewPiecesIfNeeded();
-
-	void onMouseLeftPressed(int x, int y);
-	void onMouseMoved(int x, int y);
-	void onMouseLeftReleased(int x, int y);
-	void onSpaceReleased();
 
 public:
 	Game();
 
+	const Board& getBoard() const;
+	const std::array<Piece::id_t, app::PIECE_COUNT>& getPieces() const;
 	int getScore() const;
 	bool hasLost() const;
+
+	void toggleAi();
+	void placePieceReleasedAt(int movedPiece, int i, int j);
 	void reset();
 
-	void processEvent(const sf::Event& event);
 	void tick();
-	void draw(sf::RenderWindow& window) override;
 };
 
 } // namespace game

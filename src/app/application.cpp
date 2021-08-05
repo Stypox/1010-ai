@@ -12,7 +12,6 @@ namespace app {
 void Application::draw() {
     ui.updateGame(game);
     ui.draw(window);
-    game.draw(window);
 }
 
 void Application::run() {
@@ -27,7 +26,7 @@ void Application::run() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             } else {
-                game.processEvent(event);
+                ui.processEvent(game, event);
             }
         }
 
