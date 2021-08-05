@@ -30,5 +30,5 @@ add_executable(
 	src/ai/scoring_function.cpp
 )
 
-target_include_directories("${PROJECT_NAME}" PUBLIC "${PROJECT_BINARY_DIR}" src/)
+target_include_directories("${PROJECT_NAME}" PUBLIC "${PROJECT_BINARY_DIR}" src/ lib/arg-parser/include/)
 target_link_libraries("${PROJECT_NAME}" sfml-graphics sfml-window sfml-system)
