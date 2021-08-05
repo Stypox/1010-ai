@@ -44,6 +44,23 @@ const std::vector<std::pair<game::Piece::id_t, float>> fastScoringTable {
 	{game::pieceSingle.id,          0.05f / 100},
 };
 
+const std::vector<std::pair<game::Piece::id_t, float>> customScoringTable {
+	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
+	{game::pieceLong5Vertical.id,   0.25f /  60},
+	{game::pieceLong4Vertical.id,   0.04f /  70},
+	{game::pieceLong3Vertical.id,   0.02f /  80},
+	{game::pieceLong5Horizontal.id, 0.30f /  60},
+	{game::pieceLong4Horizontal.id, 0.04f /  70},
+	{game::pieceLong3Horizontal.id, 0.02f /  80},
+	{game::pieceSquare3x3.id,       1.00f /  64},
+	{game::pieceSquare2x2.id,       0.20f /  81},
+	{game::pieceAngle3x3TL.id,      0.05f /  64},
+	{game::pieceAngle3x3TR.id,      0.05f /  64},
+	{game::pieceAngle3x3BR.id,      0.05f /  64},
+	{game::pieceAngle3x3BL.id,      0.07f /  64},
+	{game::pieceSingle.id,          0.02f / 100},
+};
+
 // scoring functions should return a score > 0, so that it compares better than
 // the base cases used in evaluation loops (where bestScoreSoFar starts at 0)
 

@@ -110,8 +110,8 @@ Game::Game()
         distribution{0, allPiecesGameProbability.size() - 1},
         ai{
             ai::FittingPiecesScoringFunction{ai::fastScoringTable}
-            + ai::ConnectedComponentsScoringFunction{0.1f, 4}
-            + ai::BiggestRectangleScoringFunction{0.1f}
+//            + ai::ConnectedComponentsScoringFunction{0.03f, 3}
+//            + ai::BiggestRectangleScoringFunction{0.01f}
         } {
     generateNewPieces();
     resetPiecePositionsAndSizes();
