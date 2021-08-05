@@ -1,12 +1,13 @@
-#include "app/application.hpp"
-
 #include <iostream>
 #include <stypox/argparser.hpp>
+
+#include "app/application.hpp"
+#include "game/game.hpp"
 
 int main(int argc, char const* argv[]) {
 	bool help = false;
 	bool usage = false;
-	bool hideUi = false;
+	bool noUi = false;
 
 	stypox::ArgParser argParser{
 		std::make_tuple(
@@ -14,7 +15,7 @@ int main(int argc, char const* argv[]) {
 			stypox::SwitchOption{"help", help, stypox::args("-h", "--help"), "show help screen"},
 			stypox::SwitchOption{"usage", usage, stypox::args("-u", "--usage"), "show usage screen"},
 			stypox::HelpSection{"\nGame options:"},
-			stypox::SwitchOption{"no ui", hideUi, stypox::args("-n", "--no-ui"), "do not start an sfml application but just run the game and print out the results"}
+			stypox::SwitchOption{"no ui", noUi, stypox::args("-n", "--no-ui"), "do not start an sfml application but just run the game and print out the results"}
 		),
 		"1010! AI by Stypox"
 	};
@@ -33,9 +34,9 @@ int main(int argc, char const* argv[]) {
 
 	argParser.validate();
 
-    if (hideUi) {
+    if (noUi) {
 
     } else {
-        app::Application{}.run();
+        app::Application{game::Game{}}.run();
     }
 }

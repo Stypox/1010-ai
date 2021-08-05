@@ -15,6 +15,11 @@ void Application::draw() {
     ui.draw(window);
 }
 
+
+Application::Application(const game::Game& game)
+    : game{game} {}
+
+
 void Application::run() {
     window.create(
         sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),

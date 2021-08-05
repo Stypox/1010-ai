@@ -16,6 +16,8 @@ class Application {
 	void draw();
 
 public:
+	Application(const game::Game& game);
+
 	void run();
 };
 
