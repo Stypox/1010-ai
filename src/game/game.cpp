@@ -24,9 +24,16 @@ void Game::generateNewPiecesIfNeeded() {
     }
 }
 
+
+void Game::calculateHasLost() {
+    hasLost = !std::any_of(pieces.begin(), pieces.end(), [this](Piece::id_t id) {
+        return id != pieceNone.id && board.fitsPieceAnywhere(allPieces[id]);
+    });
+}
+
+
 Game::Game()
-        : score{0},
-        randomNumberGenerator{std::random_device{}()},
+        : randomNumberGenerator{std::random_device{}()},
         distribution{0, allPiecesGameProbability.size() - 1},
         ai{
             ai::FittingPiecesScoringFunction{ai::fastScoringTable}
@@ -35,6 +42,7 @@ Game::Game()
         } {
     generateNewPieces();
 }
+
 
 const Board& Game::getBoard() const {
     return board;
@@ -48,10 +56,8 @@ int Game::getScore() const {
     return score;
 }
 
-bool Game::hasLost() const {
-    return !std::any_of(pieces.begin(), pieces.end(), [this](Piece::id_t id) {
-        return id != pieceNone.id && board.fitsPieceAnywhere(allPieces[id]);
-    });
+bool Game::getHasLost() const {
+    return hasLost;
 }
 
 
@@ -65,20 +71,23 @@ void Game::placePieceReleasedAt(int movedPiece, int i, int j) {
 
         // remove piece that was used
         pieces[movedPiece] = pieceNone.id;
+
+        generateNewPiecesIfNeeded();
+        calculateHasLost();
     }
-    generateNewPiecesIfNeeded();
 }
 
 void Game::reset() {
     score = 0;
     board = Board();
     generateNewPieces();
+    calculateHasLost();
 }
 
 
 void Game::tick() {
     if (useAi) {
-        if (hasLost()) {
+        if (getHasLost()) {
             std::cout<<"Score: "<<score<<"\n";
             reset();
             return;
@@ -111,6 +120,7 @@ void Game::tick() {
         }
 
         generateNewPiecesIfNeeded();
+        calculateHasLost();
     }
 }
 

@@ -14,7 +14,8 @@ class Game {
 
 	Board board;
 	std::array<Piece::id_t, app::PIECE_COUNT> pieces;
-	int score;
+	int score = 0;
+	bool hasLost = false;
 
 	ai::Ai ai;
 	bool useAi = false;
@@ -22,8 +23,11 @@ class Game {
 	std::mt19937 randomNumberGenerator;
     std::uniform_int_distribution<std::mt19937::result_type> distribution;
 
+
 	void generateNewPieces();
 	void generateNewPiecesIfNeeded();
+
+	void calculateHasLost();
 
 public:
 	Game();
@@ -31,7 +35,7 @@ public:
 	const Board& getBoard() const;
 	const std::array<Piece::id_t, app::PIECE_COUNT>& getPieces() const;
 	int getScore() const;
-	bool hasLost() const;
+	bool getHasLost() const;
 
 	void toggleAi();
 	void placePieceReleasedAt(int movedPiece, int i, int j);

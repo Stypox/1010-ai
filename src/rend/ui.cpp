@@ -103,7 +103,7 @@ void Ui::onMouseLeftReleased(game::Game& game, int x, int y) {
 }
 
 void Ui::onSpaceReleased(game::Game& game) {
-    if (game.hasLost()) {
+    if (game.getHasLost()) {
         game.reset();
     }
 }
@@ -129,6 +129,7 @@ Ui::Ui() :
 	resetPiecePositionsAndSizes();
 }
 
+
 void Ui::processEvent(game::Game& game, const sf::Event& event) {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         onMouseLeftPressed(game, event.mouseButton.x, event.mouseButton.y);
@@ -145,7 +146,7 @@ void Ui::processEvent(game::Game& game, const sf::Event& event) {
 
 void Ui::updateGame(const game::Game& game) {
 	updateScore(game.getScore());
-	updateHasLost(game.hasLost(), game.getScore());
+	updateHasLost(game.getHasLost(), game.getScore());
 
 	boardDrawable.updateBoard(game.getBoard());
 	for (int i = 0; i < app::PIECE_COUNT; ++i) {
