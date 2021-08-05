@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <iostream>
 
 #include "app/config.hpp"
 #include "app/constants.hpp"
@@ -35,6 +36,10 @@ void Application::run() {
         window.display();
 
         game.tick();
+        if (game.getUseAi() && game.getHasLost()) {
+            std::cout << "Score: " << game.getScore() << "\n";
+            game.reset();
+        }
     }
 }
 

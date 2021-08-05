@@ -36,8 +36,9 @@ public:
 	const std::array<Piece::id_t, app::PIECE_COUNT>& getPieces() const;
 	int getScore() const;
 	bool getHasLost() const;
+	bool getUseAi() const;
 
-	void toggleAi();
+	void toggleUseAi();
 	void placePieceReleasedAt(int movedPiece, int i, int j);
 	void reset();
 

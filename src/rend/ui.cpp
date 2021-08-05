@@ -140,7 +140,7 @@ void Ui::processEvent(game::Game& game, const sf::Event& event) {
     } else if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Space) {
         onSpaceReleased(game);
     } else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A) {
-        game.toggleAi();
+        game.toggleUseAi();
     }
 }
 

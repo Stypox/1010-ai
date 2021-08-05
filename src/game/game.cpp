@@ -60,8 +60,12 @@ bool Game::getHasLost() const {
     return hasLost;
 }
 
+bool Game::getUseAi() const {
+    return hasLost;
+}
 
-void Game::toggleAi() {
+
+void Game::toggleUseAi() {
     useAi = !useAi;
 }
 
@@ -87,26 +91,19 @@ void Game::reset() {
 
 void Game::tick() {
     if (useAi) {
-        if (getHasLost()) {
-            std::cout<<"Score: "<<score<<"\n";
-            reset();
-            return;
-        }
-
         std::vector<Piece::id_t> availablePieces;
         for (auto piece : pieces) {
             if (piece != pieceNone.id) {
                 availablePieces.push_back(piece);
             }
         }
-        //availablePieces = {availablePieces[rand() % availablePieces.size()]};
 
         auto moves = ai.bestCombinationOfSingleMoves(board, availablePieces);
         for (auto move : moves) {
             if (!board.fitsPieceAt(move.i, move.j, allPieces[move.id])) {
                 std::cout << "The ai provided an invalid move: " << move.i << " " << move.j << " " << (int)move.id << "\n";
                 useAi = !useAi;
-                break;
+                return;
             }
 
             score += board.placePieceAt(move.i, move.j, allPieces[move.id]);
@@ -115,8 +112,9 @@ void Game::tick() {
             pieces[usedIndex] = pieceNone.id;
         }
         if (moves.empty()) {
-            std::cout << "The ai provided an no moves\n";
+            std::cout << "The ai provided no moves\n";
             useAi = !useAi;
+            return;
         }
 
         generateNewPiecesIfNeeded();
