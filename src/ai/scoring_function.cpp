@@ -181,4 +181,9 @@ ai::scoring_function_t operator+(const ai::scoring_function_t& first,
 	};
 }
 
+ai::scoring_function_t& operator+=(ai::scoring_function_t& first,
+								   const ai::scoring_function_t& second) {
+	return first = first + second;
+}
+
 } // namespace ai
