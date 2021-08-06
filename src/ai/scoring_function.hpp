@@ -7,6 +7,9 @@
 namespace ai {
 
 using scoring_table_t = std::vector<std::pair<game::Piece::id_t, float>>;
+using scoring_function_t = std::function<float(const game::Board&)>;
+
+
 extern const scoring_table_t fullScoringTable;
 extern const scoring_table_t fastScoringTable;
 extern const scoring_table_t customScoringTable;
@@ -43,8 +46,7 @@ public:
 	float operator()(const game::Board& board) const;
 };
 
-std::function<float(const game::Board&)> operator+(
-		const std::function<float(const game::Board&)>& first,
-		const std::function<float(const game::Board&)>& second);
+ai::scoring_function_t operator+(const ai::scoring_function_t& first,
+								 const ai::scoring_function_t& second);
 
 } // namespace ai

@@ -168,9 +168,9 @@ float BiggestRectangleScoringFunction::operator()(const game::Board& board) cons
 }
 
 
-std::function<float(const game::Board&)> operator+(
-		const std::function<float(const game::Board&)>& first,
-		const std::function<float(const game::Board&)>& second) {
+ai::scoring_function_t operator+(
+		const ai::scoring_function_t& first,
+		const ai::scoring_function_t& second) {
 	return [first, second](const game::Board& board) {
 		return first(board) + second(board);
 	};

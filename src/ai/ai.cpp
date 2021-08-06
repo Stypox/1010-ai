@@ -32,7 +32,7 @@ std::pair<float, std::vector<Move>> Ai::bruteForceWithScore(const game::Board& b
 	return {bestScoreSoFar, bestMovesSoFar};
 }
 
-Ai::Ai(const std::function<float(const game::Board&)>& scoringFunction)
+Ai::Ai(const ai::scoring_function_t& scoringFunction)
 		: scoringFunction{scoringFunction} {}
 
 std::vector<Move> Ai::bruteForce(const game::Board& board, std::vector<game::Piece::id_t> availablePieces) {
