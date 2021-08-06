@@ -30,7 +30,7 @@ class Game {
 	void calculateHasLost();
 
 public:
-	Game();
+	Game(const ai::Ai& ai);
 
 	const Board& getBoard() const;
 	const std::array<Piece::id_t, app::PIECE_COUNT>& getPieces() const;

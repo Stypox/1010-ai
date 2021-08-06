@@ -32,14 +32,10 @@ void Game::calculateHasLost() {
 }
 
 
-Game::Game()
-        : randomNumberGenerator{std::random_device{}()},
-        distribution{0, allPiecesGameProbability.size() - 1},
-        ai{
-            ai::FittingPiecesScoringFunction{ai::fastScoringTable}
-//            + ai::ConnectedComponentsScoringFunction{0.03f, 3}
-//            + ai::BiggestRectangleScoringFunction{0.01f}
-        } {
+Game::Game(const ai::Ai& ai)
+        : ai{ai},
+        randomNumberGenerator{std::random_device{}()},
+        distribution{0, allPiecesGameProbability.size() - 1} {
     generateNewPieces();
 }
 

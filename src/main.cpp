@@ -4,6 +4,7 @@
 #include "app/application.hpp"
 #include "app/no_ui_application.hpp"
 #include "game/game.hpp"
+#include "ai/scoring_function.hpp"
 
 int main(int argc, char const* argv[]) {
 	bool help = false;
@@ -35,9 +36,12 @@ int main(int argc, char const* argv[]) {
 
 	argParser.validate();
 
+	// run application
+//            + ai::ConnectedComponentsScoringFunction{0.03f, 3}
+//            + ai::BiggestRectangleScoringFunction{0.01f}
     if (noUi) {
-		app::NoUiApplication{game::Game{}}.run();
+		app::NoUiApplication{game::Game{{ai::FittingPiecesScoringFunction{ai::fastScoringTable}}}}.run();
     } else {
-        app::Application{game::Game{}}.run();
+        app::Application{game::Game{{ai::FittingPiecesScoringFunction{ai::fastScoringTable}}}}.run();
     }
 }
