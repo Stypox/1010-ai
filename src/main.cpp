@@ -11,13 +11,28 @@ int main(int argc, char const* argv[]) {
 	bool usage = false;
 	bool noUi = false;
 
+	std::vector<std::pair<game::Piece::id_t, float>> scoringTable;
+
 	stypox::ArgParser argParser{
 		std::make_tuple(
 			stypox::HelpSection{"\nHelp options:"},
 			stypox::SwitchOption{"help", help, stypox::args("-h", "--help"), "show help screen"},
 			stypox::SwitchOption{"usage", usage, stypox::args("-u", "--usage"), "show usage screen"},
 			stypox::HelpSection{"\nGame options:"},
-			stypox::SwitchOption{"no ui", noUi, stypox::args("-n", "--no-ui"), "do not start an sfml application but just run the game and print out the results"}
+			stypox::SwitchOption{"no ui", noUi, stypox::args("-n", "--no-ui"), "do not start an sfml application but just run the game and print out the results"},
+			stypox::HelpSection{"\nAI options (only the scoring functions related to the provided arguments will be used,\n    though if no option is selected, FittingPiecesScoringFunction with fastScoringTable will be used):"},
+			stypox::ManualOption{"scoring table", scoringTable, stypox::args("--scoring-table="), "a scoring table (possible values: full, fast, custom)",
+				[](const std::string_view& str) {
+					if (str == "full") {
+						return ai::fullScoringTable;
+					} else if (str == "fast") {
+						return ai::fastScoringTable;
+					} else if (str == "custom") {
+						return ai::customScoringTable;
+					} else {
+						throw std::runtime_error{"Invalid scoring table: " + std::string{str}};
+					}
+				}}
 		),
 		"1010! AI by Stypox"
 	};
@@ -40,8 +55,8 @@ int main(int argc, char const* argv[]) {
 //            + ai::ConnectedComponentsScoringFunction{0.03f, 3}
 //            + ai::BiggestRectangleScoringFunction{0.01f}
     if (noUi) {
-		app::NoUiApplication{game::Game{{ai::FittingPiecesScoringFunction{ai::fastScoringTable}}}}.run();
+		app::NoUiApplication{game::Game{{ai::FittingPiecesScoringFunction{scoringTable}}}}.run();
     } else {
-        app::Application{game::Game{{ai::FittingPiecesScoringFunction{ai::fastScoringTable}}}}.run();
+        app::Application{game::Game{{ai::FittingPiecesScoringFunction{scoringTable}}}}.run();
     }
 }
