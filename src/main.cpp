@@ -18,7 +18,7 @@ void parseArguments(int argc, char const* argv[], bool& noUi, ai::scoring_table_
 			stypox::HelpSection{"\nGame options:"},
 			stypox::SwitchOption{"no ui", noUi, stypox::args("-n", "--no-ui"), "do not start an sfml application but just run the game and print out the results"},
 			stypox::HelpSection{"\nAI options (only the scoring functions related to the provided arguments will be used,\n    though if no option is selected, FittingPiecesScoringFunction with fastScoringTable will be used):"},
-			stypox::ManualOption{"scoring table", scoringTable, stypox::args("--scoring-table="), "a scoring table (possible values: full, fast, custom)",
+			stypox::ManualOption{"scoring table", scoringTable, stypox::args("-fpst=", "--fitting-pieces-scoring-table="), "a scoring table (possible values: full, fast, custom)",
 				[](const std::string_view& str) {
 					if (str == "full") {
 						return ai::fullScoringTable;
