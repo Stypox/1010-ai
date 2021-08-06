@@ -6,12 +6,9 @@
 #include "game/game.hpp"
 #include "ai/scoring_function.hpp"
 
-int main(int argc, char const* argv[]) {
+void parseArguments(int argc, char const* argv[], bool& noUi, ai::scoring_table_t& scoringTable) {
 	bool help = false;
 	bool usage = false;
-	bool noUi = false;
-
-	ai::scoring_table_t scoringTable;
 
 	stypox::ArgParser argParser{
 		std::make_tuple(
@@ -42,14 +39,20 @@ int main(int argc, char const* argv[]) {
 	// check for help before validating
 	if (help) {
 		std::cout << argParser.help();
-		return 0;
+		exit(0);
 	}
 	if (usage) {
 		std::cout << argParser.usage();
-		return 0;
+		exit(0);
 	}
 
 	argParser.validate();
+}
+
+int main(int argc, char const* argv[]) {
+	bool noUi = false;
+	ai::scoring_table_t scoringTable;
+	parseArguments(argc, argv, noUi, scoringTable);
 
 	// run application
 //            + ai::ConnectedComponentsScoringFunction{0.03f, 3}
