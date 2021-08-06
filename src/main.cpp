@@ -11,7 +11,7 @@ int main(int argc, char const* argv[]) {
 	bool usage = false;
 	bool noUi = false;
 
-	std::vector<std::pair<game::Piece::id_t, float>> scoringTable;
+	ai::scoring_table_t scoringTable;
 
 	stypox::ArgParser argParser{
 		std::make_tuple(

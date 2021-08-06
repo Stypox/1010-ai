@@ -7,7 +7,7 @@ namespace ai {
 
 // the numerator represents how valuable it is to have an available space for that piece
 // the denominator is the maximum number of occourrences of the piece
-const std::vector<std::pair<game::Piece::id_t, float>> fullScoringTable {
+const scoring_table_t fullScoringTable {
 	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
 	{game::pieceLong5Vertical.id,   0.25f /  60},
 	{game::pieceLong4Vertical.id,   0.15f /  70},
@@ -30,7 +30,7 @@ const std::vector<std::pair<game::Piece::id_t, float>> fullScoringTable {
 	{game::pieceSingle.id,          0.05f / 100},
 };
 
-const std::vector<std::pair<game::Piece::id_t, float>> fastScoringTable {
+const scoring_table_t fastScoringTable {
 	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
 	{game::pieceLong5Vertical.id,   0.25f /  60},
 	{game::pieceLong5Horizontal.id, 0.25f /  60},
@@ -43,7 +43,7 @@ const std::vector<std::pair<game::Piece::id_t, float>> fastScoringTable {
 	{game::pieceSingle.id,          0.05f / 100},
 };
 
-const std::vector<std::pair<game::Piece::id_t, float>> customScoringTable {
+const scoring_table_t customScoringTable {
 	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
 	{game::pieceLong5Vertical.id,   0.25f /  60},
 	{game::pieceLong4Vertical.id,   0.04f /  70},
@@ -62,7 +62,7 @@ const std::vector<std::pair<game::Piece::id_t, float>> customScoringTable {
 
 
 FittingPiecesScoringFunction::FittingPiecesScoringFunction(
-		const std::vector<std::pair<game::Piece::id_t, float>>& theScoringTable)
+		const scoring_table_t& theScoringTable)
 		: scoringTable{theScoringTable} {}
 
 float FittingPiecesScoringFunction::operator()(const game::Board& board) const {
