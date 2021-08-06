@@ -168,9 +168,14 @@ float BiggestRectangleScoringFunction::operator()(const game::Board& board) cons
 }
 
 
-ai::scoring_function_t operator+(
-		const ai::scoring_function_t& first,
-		const ai::scoring_function_t& second) {
+ai::scoring_function_t operator+(const ai::scoring_function_t& first,
+								 const ai::scoring_function_t& second) {
+	if (first == nullptr) {
+		return second;
+	} else if (second == nullptr) {
+		return first;
+	}
+
 	return [first, second](const game::Board& board) {
 		return first(board) + second(board);
 	};
