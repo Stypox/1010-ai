@@ -93,13 +93,31 @@ int main(int argc, char const* argv[]) {
 	ai::scoring_table_t scoringTable;
 	std::pair<float, int> connectedComponentsParams{0.0f, 1};
 	float biggestRectangleMaxScore = 0.0f;
+
 	parseArguments(argc, argv, noUi,
 		scoringTable, connectedComponentsParams, biggestRectangleMaxScore);
 
+	ai::scoring_function_t scoringFunction;
+	if (!scoringTable.empty()) {
+		scoringFunction += ai::FittingPiecesScoringFunction{scoringTable};
+	}
+	if (connectedComponentsParams.first > 0) {
+		scoringFunction += ai::ConnectedComponentsScoringFunction{
+			connectedComponentsParams.first, connectedComponentsParams.second};
+	}
+	if (biggestRectangleMaxScore > 0) {
+		scoringFunction += ai::BiggestRectangleScoringFunction{biggestRectangleMaxScore};
+	}
+	if (scoringFunction == nullptr) {
+		// if no options were provided, default to this
+		scoringFunction = ai::FittingPiecesScoringFunction{ai::fastScoringTable};
+	}
+
 	// run application
+	game::Game game{scoringFunction};
     if (noUi) {
-		app::NoUiApplication{game::Game{{ai::FittingPiecesScoringFunction{scoringTable}}}}.run();
+		app::NoUiApplication{game}.run();
     } else {
-        app::Application{game::Game{{ai::FittingPiecesScoringFunction{scoringTable}}}}.run();
+        app::Application{game}.run();
     }
 }
