@@ -4,18 +4,18 @@
 #include <array>
 #include <SFML/Graphics/Color.hpp>
 
+#include "util/typedefs.hpp"
+
 namespace game {
 
 struct Piece {
-	using id_t = uint8_t;
-
-	const id_t id; // the index of this piece in the allPieces array
+	const piece_id_t id; // the index of this piece in the allPieces array
 	const sf::Color color;
 	const std::vector<std::vector<bool>> bitmask;
 	const size_t height;
 	const size_t width;
 
-	Piece(const id_t id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask);
+	Piece(const piece_id_t id, const sf::Color& color, const std::vector<std::vector<bool>>& bitmask);
 };
 
 extern const Piece pieceNone;

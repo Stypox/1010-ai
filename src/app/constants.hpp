@@ -1,13 +1,15 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <SFML/Graphics.hpp>
 
 #include "app/config.hpp"
+#include "util/typedefs.hpp"
 
 namespace app {
 
-constexpr unsigned int BOARD_SIZE = 10; // 10x10 squares
+constexpr board_index_t BOARD_SIZE = 10; // 10x10 squares
 
 const std::string WINDOW_NAME = std::string(PROJECT_NAME) + " " + std::to_string(VERSION_MAJOR) + "." + std::to_string(VERSION_MINOR);
 constexpr unsigned int WINDOW_WIDTH = 900;

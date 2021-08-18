@@ -1,23 +1,25 @@
 #include "ai.hpp"
 
+#include "raw/raw_board.hpp"
+#include "raw/raw_piece.hpp"
+
 namespace ai {
 
-std::pair<float, std::vector<Move>> Ai::bruteForceWithScore(const game::Board& board, const std::vector<game::Piece::id_t>& availablePieces) {
+std::pair<float, std::vector<Move>> Ai::bruteForceWithScore(const raw_board_t& board, const std::vector<piece_id_t>& availablePieces) {
 	if (availablePieces.empty()) {
 		return {scoringFunction(board), {}};
 	}
 
-	const game::Piece::id_t currentPieceId = availablePieces[0];
-	const game::Piece& currentPiece = game::allPieces[currentPieceId];
-	const std::vector<game::Piece::id_t> nextAvailablePieces{availablePieces.begin() + 1, availablePieces.end()};
+	const piece_id_t currentPieceId = availablePieces[0];
+	const std::vector<piece_id_t> nextAvailablePieces{availablePieces.begin() + 1, availablePieces.end()};
 
 	float bestScoreSoFar = 0.0f;
 	std::vector<Move> bestMovesSoFar;
-	for (int i = 0; i < app::BOARD_SIZE - currentPiece.height + 1; ++i) {
-		for (int j = 0; j < app::BOARD_SIZE - currentPiece.width + 1; ++j) {
-			if (board.fitsPieceAt(i, j, currentPiece)) {
-				game::Board newBoard = board;
-				newBoard.placePieceAt(i, j, currentPiece);
+	for (int i = 0; i < app::BOARD_SIZE - raw::pieceHeight[currentPieceId] + 1; ++i) {
+		for (int j = 0; j < app::BOARD_SIZE - raw::pieceWidth[currentPieceId] + 1; ++j) {
+			if (raw::fitsPieceAt(board, i, j, currentPieceId)) {
+				raw_board_t newBoard = board;
+				raw::placePieceAt(newBoard, i, j, currentPieceId);
 
 				auto [score, moves] = bruteForceWithScore(newBoard, nextAvailablePieces);
 				if (score > bestScoreSoFar) {
@@ -35,7 +37,7 @@ std::pair<float, std::vector<Move>> Ai::bruteForceWithScore(const game::Board& b
 Ai::Ai(const ai::scoring_function_t& scoringFunction)
 		: scoringFunction{scoringFunction} {}
 
-std::vector<Move> Ai::bruteForce(const game::Board& board, std::vector<game::Piece::id_t> availablePieces) {
+std::vector<Move> Ai::bruteForce(const raw_board_t& board, std::vector<piece_id_t> availablePieces) {
 	sort(availablePieces.begin(), availablePieces.end());
 
 	float bestScoreSoFar = 0.0f;
@@ -51,7 +53,7 @@ std::vector<Move> Ai::bruteForce(const game::Board& board, std::vector<game::Pie
 	return {bestMovesSoFar.rbegin(), bestMovesSoFar.rend()}; // reverse vector to have ordered moves
 }
 
-std::vector<Move> Ai::bestCombinationOfSingleMoves(const game::Board& board, std::vector<game::Piece::id_t> availablePieces) {
+std::vector<Move> Ai::bestCombinationOfSingleMoves(const raw_board_t& board, std::vector<piece_id_t> availablePieces) {
 	sort(availablePieces.begin(), availablePieces.end());
 
 	float bestScoreSoFar = 0.0f;
@@ -59,7 +61,7 @@ std::vector<Move> Ai::bestCombinationOfSingleMoves(const game::Board& board, std
 	do {
 		float score = 0.0f;
 		std::vector<Move> moves;
-		game::Board currentBoard = board;
+		raw_board_t currentBoard = board;
 		for (auto availablePiece : availablePieces) {
 			auto [partialScore, partialMoves] = bruteForceWithScore(currentBoard, {availablePiece});
 			if (partialMoves.empty()) {
@@ -68,7 +70,7 @@ std::vector<Move> Ai::bestCombinationOfSingleMoves(const game::Board& board, std
 
 			score += partialScore;
 			moves.push_back(partialMoves[0]);
-			currentBoard.placePieceAt(partialMoves[0].i, partialMoves[0].j, game::allPieces[availablePiece]);
+			raw::placePieceAt(currentBoard, partialMoves[0].i, partialMoves[0].j, availablePiece);
 		}
 
 		if (score > bestScoreSoFar) {

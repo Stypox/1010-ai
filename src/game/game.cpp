@@ -8,6 +8,7 @@
 #include "ai/move.hpp"
 #include "ai/ai.hpp"
 #include "ai/scoring_function.hpp"
+#include "raw/raw_board.hpp"
 
 namespace game {
 
@@ -19,15 +20,15 @@ void Game::generateNewPieces() {
 }
 
 void Game::generateNewPiecesIfNeeded() {
-    if (std::all_of(pieces.begin(), pieces.end(), [](Piece::id_t id) { return id == pieceNone.id; })) {
+    if (std::all_of(pieces.begin(), pieces.end(), [](piece_id_t id) { return id == pieceNone.id; })) {
         generateNewPieces();
     }
 }
 
 
 void Game::calculateHasLost() {
-    hasLost = !std::any_of(pieces.begin(), pieces.end(), [this](Piece::id_t id) {
-        return id != pieceNone.id && board.fitsPieceAnywhere(allPieces[id]);
+    hasLost = !std::any_of(pieces.begin(), pieces.end(), [this](piece_id_t id) {
+        return id != pieceNone.id && board.fitsPieceAnywhere(id);
     });
 }
 
@@ -44,7 +45,7 @@ const Board& Game::getBoard() const {
     return board;
 }
 
-const std::array<Piece::id_t, app::PIECE_COUNT>& Game::getPieces() const {
+const std::array<piece_id_t, app::PIECE_COUNT>& Game::getPieces() const {
     return pieces;
 }
 
@@ -66,8 +67,8 @@ void Game::toggleUseAi() {
 }
 
 void Game::placePieceReleasedAt(int movedPiece, int i, int j) {
-    if (board.fitsPieceAt(j, i, allPieces[pieces[movedPiece]])) {
-        score += board.placePieceAt(j, i, allPieces[pieces[movedPiece]]);
+    if (board.fitsPieceAt(j, i, pieces[movedPiece])) {
+        score += board.placePieceAt(j, i, pieces[movedPiece]);
 
         // remove piece that was used
         pieces[movedPiece] = pieceNone.id;
@@ -87,29 +88,30 @@ void Game::reset() {
 
 void Game::tick() {
     if (useAi) {
-        std::vector<Piece::id_t> availablePieces;
+        std::cout << "Tick " << time(0) << std::endl;
+        std::vector<piece_id_t> availablePieces;
         for (auto piece : pieces) {
             if (piece != pieceNone.id) {
                 availablePieces.push_back(piece);
             }
         }
 
-        auto moves = ai.bestCombinationOfSingleMoves(board, availablePieces);
+        auto moves = ai.bruteForce(board.getRawData(), availablePieces);
         for (auto move : moves) {
-            if (!board.fitsPieceAt(move.i, move.j, allPieces[move.id])) {
+            if (!board.fitsPieceAt(move.i, move.j, move.id)) {
                 std::cout << "The ai provided an invalid move: " << move.i << " " << move.j << " " << (int)move.id << "\n";
-                useAi = !useAi;
+                useAi = false;
                 return;
             }
 
-            score += board.placePieceAt(move.i, move.j, allPieces[move.id]);
+            score += board.placePieceAt(move.i, move.j, move.id);
 
             int usedIndex = std::find(pieces.begin(), pieces.end(), move.id) - pieces.begin();
             pieces[usedIndex] = pieceNone.id;
         }
         if (moves.empty()) {
             std::cout << "The ai provided no moves\n";
-            useAi = !useAi;
+            useAi = false;
             return;
         }
 

@@ -1,14 +1,16 @@
 #include "scoring_function.hpp"
 
 #include <stack>
-#include <iostream>
+
+#include "raw/raw_board.hpp"
+#include "raw/raw_piece.hpp"
 
 namespace ai {
 
 // the numerator represents how valuable it is to have an available space for that piece
 // the denominator is the maximum number of occourrences of the piece
 const scoring_table_t fullScoringTable {
-	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
+	std::pair<piece_id_t, float> // needs to be specified for the first item
 	{game::pieceLong5Vertical.id,   0.25f /  60},
 	{game::pieceLong4Vertical.id,   0.15f /  70},
 	{game::pieceLong3Vertical.id,   0.07f /  80},
@@ -31,7 +33,7 @@ const scoring_table_t fullScoringTable {
 };
 
 const scoring_table_t fastScoringTable {
-	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
+	std::pair<piece_id_t, float> // needs to be specified for the first item
 	{game::pieceLong5Vertical.id,   0.25f /  60},
 	{game::pieceLong5Horizontal.id, 0.25f /  60},
 	{game::pieceSquare3x3.id,       1.00f /  64},
@@ -44,7 +46,7 @@ const scoring_table_t fastScoringTable {
 };
 
 const scoring_table_t customScoringTable {
-	std::pair<game::Piece::id_t, float> // needs to be specified for the first item
+	std::pair<piece_id_t, float> // needs to be specified for the first item
 	{game::pieceLong5Vertical.id,   0.25f /  60},
 	{game::pieceLong4Vertical.id,   0.04f /  70},
 	{game::pieceLong3Vertical.id,   0.02f /  80},
@@ -65,13 +67,12 @@ FittingPiecesScoringFunction::FittingPiecesScoringFunction(
 		const scoring_table_t& theScoringTable)
 		: scoringTable{theScoringTable} {}
 
-float FittingPiecesScoringFunction::operator()(const game::Board& board) const {
+float FittingPiecesScoringFunction::operator()(const raw_board_t& board) const {
 	float score = 0.01f; // always greater than 0, so that it compares better than the score used as the base case
 	for (const auto& [id, partialScore] : scoringTable) {
-		const game::Piece& piece = game::allPieces[id];
-		for (int i = 0; i < app::BOARD_SIZE - piece.height + 1; ++i) {
-			for (int j = 0; j < app::BOARD_SIZE - piece.width + 1; ++j) {
-				if (board.fitsPieceAt(i, j, piece)) {
+		for (int i = 0; i < app::BOARD_SIZE - raw::pieceHeight[id] + 1; ++i) {
+			for (int j = 0; j < app::BOARD_SIZE - raw::pieceWidth[id] + 1; ++j) {
+				if (raw::fitsPieceAt(board, i, j, id)) {
 					score += partialScore;
 				}
 			}
@@ -83,9 +84,9 @@ float FittingPiecesScoringFunction::operator()(const game::Board& board) const {
 ConnectedComponentsScoringFunction::ConnectedComponentsScoringFunction(float maxScore, int penalizeSmallerThan)
 		: maxScore{maxScore}, penalizeSmallerThan{penalizeSmallerThan} {}
 
-float ConnectedComponentsScoringFunction::operator()(const game::Board& board) const {
+float ConnectedComponentsScoringFunction::operator()(const raw_board_t& board) const {
 	// basically bucket fill multiple times, runs in O(N*M)
-
+/*
 	const auto& boardData = board.getData();
 	std::array<std::bitset<app::BOARD_SIZE>, app::BOARD_SIZE> seen{}; // initialize to false
 
@@ -116,16 +117,16 @@ float ConnectedComponentsScoringFunction::operator()(const game::Board& board) c
 	}
 
 	return maxScore * std::max(1.0f - 0.2f * smallConnectedComponents,
-		0.2f / (smallConnectedComponents + 1));
+		0.2f / (smallConnectedComponents + 1));*/return 0.1f;
 }
 
 BiggestRectangleScoringFunction::BiggestRectangleScoringFunction(float maxScore)
 		: maxScore{maxScore} {}
 
-float BiggestRectangleScoringFunction::operator()(const game::Board& board) const {
+float BiggestRectangleScoringFunction::operator()(const raw_board_t& board) const {
 	// https://www.drdobbs.com/database/the-maximal-rectangle-problem/184410529
 	// runs in O(N*M)
-
+/*
 	const auto& boardData = board.getData();
 	std::array<int, app::BOARD_SIZE + 1> spacesRight{}; // the last element will stay 0
 
@@ -164,7 +165,7 @@ float BiggestRectangleScoringFunction::operator()(const game::Board& board) cons
 		}
 	}
 
-	return maxScore * bestArea / (app::BOARD_SIZE * app::BOARD_SIZE);
+	return maxScore * bestArea / (app::BOARD_SIZE * app::BOARD_SIZE);*/return 0.1f;
 }
 
 
@@ -176,7 +177,7 @@ ai::scoring_function_t operator+(const ai::scoring_function_t& first,
 		return first;
 	}
 
-	return [first, second](const game::Board& board) {
+	return [first, second](const raw_board_t& board) {
 		return first(board) + second(board);
 	};
 }

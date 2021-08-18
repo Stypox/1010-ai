@@ -7,7 +7,7 @@ namespace ai {
 struct Move {
 	int i;
 	int j;
-	game::Piece::id_t id;
+	piece_id_t id;
 };
 
 } // namespace ai

@@ -6,8 +6,8 @@
 
 namespace ai {
 
-using scoring_table_t = std::vector<std::pair<game::Piece::id_t, float>>;
-using scoring_function_t = std::function<float(const game::Board&)>;
+using scoring_table_t = std::vector<std::pair<piece_id_t, float>>;
+using scoring_function_t = std::function<float(const raw_board_t&)>;
 
 
 extern const scoring_table_t fullScoringTable;
@@ -24,7 +24,7 @@ class FittingPiecesScoringFunction {
 public:
 	FittingPiecesScoringFunction(const scoring_table_t& scoringTable);
 
-	float operator()(const game::Board& board) const;
+	float operator()(const raw_board_t& board) const;
 };
 
 class ConnectedComponentsScoringFunction {
@@ -34,7 +34,7 @@ class ConnectedComponentsScoringFunction {
 public:
 	ConnectedComponentsScoringFunction(float maxScore, int penalizeSmallerThan);
 
-	float operator()(const game::Board& board) const;
+	float operator()(const raw_board_t& board) const;
 };
 
 class BiggestRectangleScoringFunction {
@@ -43,7 +43,7 @@ class BiggestRectangleScoringFunction {
 public:
 	BiggestRectangleScoringFunction(float maxScore);
 
-	float operator()(const game::Board& board) const;
+	float operator()(const raw_board_t& board) const;
 };
 
 ai::scoring_function_t operator+(const ai::scoring_function_t& first,

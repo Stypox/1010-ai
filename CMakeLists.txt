@@ -29,6 +29,7 @@ add_executable(
 	src/game/game.cpp
 	src/ai/ai.cpp
 	src/ai/scoring_function.cpp
+	src/raw/raw_board.cpp
 )
 
 target_include_directories("${PROJECT_NAME}" PUBLIC "${PROJECT_BINARY_DIR}" src/ lib/arg-parser/include/)

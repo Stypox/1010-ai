@@ -13,7 +13,7 @@ namespace game {
 class Game {
 
 	Board board;
-	std::array<Piece::id_t, app::PIECE_COUNT> pieces;
+	std::array<piece_id_t, app::PIECE_COUNT> pieces;
 	int score = 0;
 	bool hasLost = false;
 
@@ -33,7 +33,7 @@ public:
 	Game(const ai::Ai& ai);
 
 	const Board& getBoard() const;
-	const std::array<Piece::id_t, app::PIECE_COUNT>& getPieces() const;
+	const std::array<piece_id_t, app::PIECE_COUNT>& getPieces() const;
 	int getScore() const;
 	bool getHasLost() const;
 	bool getUseAi() const;
