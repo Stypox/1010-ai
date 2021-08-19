@@ -8,7 +8,7 @@
 namespace raw {
 
 inline raw_board_t pieceMaskShifted(board_index_t i, board_index_t j, piece_id_t id) {
-	board_index_t shift = i * app::BOARD_SIZE + j - 50; // 50 is the number of bits in piece masks
+	int8_t shift = i * app::BOARD_SIZE + j - int8_t(50); // 50 is the number of bits in piece masks
 	return (shift > 0) ? (pieceMask[id] >> shift) : (pieceMask[id] << -shift);
 }
 
@@ -17,6 +17,10 @@ bool fitsPieceAt(const raw_board_t& board, board_index_t i, board_index_t j, pie
 		return false;
 	}
 
+	return (board & pieceMaskShifted(i, j, id)) == 0;
+}
+
+bool fitsPieceAtNoBoundaryChecks(const raw_board_t& board, board_index_t i, board_index_t j, piece_id_t id) {
 	return (board & pieceMaskShifted(i, j, id)) == 0;
 }
 

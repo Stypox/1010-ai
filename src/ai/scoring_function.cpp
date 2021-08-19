@@ -72,7 +72,7 @@ float FittingPiecesScoringFunction::operator()(const raw_board_t& board) const {
 	for (const auto& [id, partialScore] : scoringTable) {
 		for (int i = 0; i < app::BOARD_SIZE - raw::pieceHeight[id] + 1; ++i) {
 			for (int j = 0; j < app::BOARD_SIZE - raw::pieceWidth[id] + 1; ++j) {
-				if (raw::fitsPieceAt(board, i, j, id)) {
+				if (raw::fitsPieceAtNoBoundaryChecks(board, i, j, id)) {
 					score += partialScore;
 				}
 			}

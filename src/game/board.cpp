@@ -7,6 +7,7 @@
 #include "piece.hpp"
 #include "app/constants.hpp"
 #include "raw/raw_board.hpp"
+#include "raw/raw_piece.hpp"
 
 namespace game {
 
@@ -73,10 +74,9 @@ bool Board::fitsPieceAt(board_index_t i, board_index_t j, piece_id_t id) const {
 }
 
 bool Board::fitsPieceAnywhere(piece_id_t id) const {
-	const Piece& piece = allPieces[id];
-	for (board_index_t i = 0; i < app::BOARD_SIZE - piece.height + 1; ++i) {
-		for (board_index_t j = 0; j < app::BOARD_SIZE - piece.width + 1; ++j) {
-			if (fitsPieceAt(i, j, id)) {
+	for (board_index_t i = 0; i < app::BOARD_SIZE - raw::pieceHeight[id] + 1; ++i) {
+		for (board_index_t j = 0; j < app::BOARD_SIZE - raw::pieceWidth[id] + 1; ++j) {
+			if (raw::fitsPieceAtNoBoundaryChecks(rawData, i, j, id)) {
 				return true;
 			}
 		}
