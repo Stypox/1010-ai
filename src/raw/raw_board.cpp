@@ -7,14 +7,17 @@
 
 namespace raw {
 
+inline raw_board_t pieceMaskShifted(board_index_t i, board_index_t j, piece_id_t id) {
+	board_index_t shift = i * app::BOARD_SIZE + j - 50; // 50 is the number of bits in piece masks
+	return (shift > 0) ? (pieceMask[id] >> shift) : (pieceMask[id] << -shift);
+}
+
 bool fitsPieceAt(const raw_board_t& board, board_index_t i, board_index_t j, piece_id_t id) {
 	if (i + pieceHeight[id] > app::BOARD_SIZE || j + pieceWidth[id] > app::BOARD_SIZE) {
 		return false;
 	}
 
-	board_index_t topLeftIndex = i * app::BOARD_SIZE + j;
-	int16_t shift = topLeftIndex - 50; // 50 is the number of bits in piece masks
-	return (board & ((shift > 0) ? (pieceMask[id] >> shift) : (pieceMask[id] << -shift))) == 0;
+	return (board & pieceMaskShifted(i, j, id)) == 0;
 }
 
 constexpr raw_board_t verticalLineMask
@@ -23,9 +26,7 @@ constexpr raw_board_t verticalLineMask
 constexpr raw_board_t horizontalLineMask = 0b1111111111;
 
 int placePieceAt(raw_board_t& board, board_index_t i, board_index_t j, piece_id_t id) {
-	board_index_t topLeftIndex = i * app::BOARD_SIZE + j;
-	int16_t shift = topLeftIndex - 50; // 50 is the number of bits in piece masks
-	board |= ((shift > 0) ? (pieceMask[id] >> shift) : (pieceMask[id] << -shift));
+	board |= pieceMaskShifted(i, j, id);
 	int points = piecePoints[id];
 
 	uint16_t verticalLinesToClear = 0, horizontalLinesToClear = 0;
