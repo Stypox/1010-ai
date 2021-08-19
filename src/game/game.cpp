@@ -88,7 +88,6 @@ void Game::reset() {
 
 void Game::tick() {
     if (useAi) {
-        std::cout << "Tick " << time(0) << std::endl;
         std::vector<piece_id_t> availablePieces;
         for (auto piece : pieces) {
             if (piece != pieceNone.id) {
