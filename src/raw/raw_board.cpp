@@ -33,14 +33,14 @@ int placePieceAt(raw_board_t& board, board_index_t i, board_index_t j, piece_id_
 	board_index_t verticalLineCount = 0, horizontalLineCount = 0;
 	for (board_index_t rowCol = 0; rowCol < app::BOARD_SIZE; ++rowCol) {
 		raw_board_t shiftedVerticalLineMask = verticalLineMask >> rowCol;
-		raw_board_t shiftedHorizontalLineMask = horizontalLineMask << ((9 - rowCol) * 10);
+		raw_board_t shiftedHorizontalLineMask = horizontalLineMask << ((board_index_t(9) - rowCol) * board_index_t(10));
 
 		if ((board & shiftedVerticalLineMask) == shiftedVerticalLineMask) {
-			verticalLinesToClear |= (1 << rowCol);
+			verticalLinesToClear |= (uint16_t(1) << rowCol);
 			++verticalLineCount;
 		}
 		if ((board & shiftedHorizontalLineMask) == shiftedHorizontalLineMask) {
-			horizontalLinesToClear |= (1 << rowCol);
+			horizontalLinesToClear |= (uint16_t(1) << rowCol);
 			++horizontalLineCount;
 		}
 	}
@@ -48,11 +48,11 @@ int placePieceAt(raw_board_t& board, board_index_t i, board_index_t j, piece_id_
 	points += (verticalLineCount + horizontalLineCount) * app::BOARD_SIZE
 		- verticalLineCount * horizontalLineCount; // prevent duplicate removed squares
 	for (board_index_t rowCol = 0; rowCol < app::BOARD_SIZE; ++rowCol) {
-		if (verticalLinesToClear & (1 << rowCol)) {
+		if (verticalLinesToClear & (uint16_t(1) << rowCol)) {
 			board &= ~(verticalLineMask >> rowCol);
 		}
-		if (horizontalLinesToClear & (1 << rowCol)) {
-			board &= ~(horizontalLineMask << ((9 - rowCol) * 10));
+		if (horizontalLinesToClear & (uint16_t(1) << rowCol)) {
+			board &= ~(horizontalLineMask << ((board_index_t(9) - rowCol) * board_index_t(10)));
 		}
 	}
 
@@ -61,7 +61,7 @@ int placePieceAt(raw_board_t& board, board_index_t i, board_index_t j, piece_id_
 
 
 bool usedAt(const raw_board_t& board, board_index_t i, board_index_t j) {
-	return board & (raw_board_t(1) << ((9 - i) * app::BOARD_SIZE + (9 - j)));
+	return board & (raw_board_t(1) << ((board_index_t(9) - i) * app::BOARD_SIZE + (board_index_t(9) - j)));
 }
 
 void printBoard(const raw_board_t& board) {
