@@ -86,13 +86,11 @@ ConnectedComponentsScoringFunction::ConnectedComponentsScoringFunction(float max
 
 float ConnectedComponentsScoringFunction::operator()(const raw_board_t& board) const {
 	// basically bucket fill multiple times, runs in O(N*M)
-/*
-	const auto& boardData = board.getData();
 	std::array<std::bitset<app::BOARD_SIZE>, app::BOARD_SIZE> seen{}; // initialize to false
 
-	std::function<int(int, int, bool)> dfs = [&boardData, &seen, &dfs](int i, int j, bool filled) {
+	std::function<int(int, int, bool)> dfs = [&board, &seen, &dfs](int i, int j, bool filled) {
 		if (i < 0 || i >= app::BOARD_SIZE || j < 0 || j >= app::BOARD_SIZE
-				|| seen[i][j] || filled != (boardData[i][j] == game::pieceNone.id)) {
+				|| seen[i][j] || filled != raw::usedAt(board, i, j)) {
 			return 0;
 		}
 
@@ -108,7 +106,7 @@ float ConnectedComponentsScoringFunction::operator()(const raw_board_t& board) c
 	for (int i = 0; i < app::BOARD_SIZE; ++i) {
 		for (int j = 0; j < app::BOARD_SIZE; ++j) {
 			if (!seen[i][j]) {
-				int componentSize = dfs(i, j, boardData[i][j] == game::pieceNone.id);
+				int componentSize = dfs(i, j, raw::usedAt(board, i, j));
 				if (componentSize < penalizeSmallerThan) {
 					++smallConnectedComponents;
 				}
@@ -117,7 +115,7 @@ float ConnectedComponentsScoringFunction::operator()(const raw_board_t& board) c
 	}
 
 	return maxScore * std::max(1.0f - 0.2f * smallConnectedComponents,
-		0.2f / (smallConnectedComponents + 1));*/return 0.1f;
+		0.2f / (smallConnectedComponents + 1));
 }
 
 BiggestRectangleScoringFunction::BiggestRectangleScoringFunction(float maxScore)
@@ -126,8 +124,6 @@ BiggestRectangleScoringFunction::BiggestRectangleScoringFunction(float maxScore)
 float BiggestRectangleScoringFunction::operator()(const raw_board_t& board) const {
 	// https://www.drdobbs.com/database/the-maximal-rectangle-problem/184410529
 	// runs in O(N*M)
-/*
-	const auto& boardData = board.getData();
 	std::array<int, app::BOARD_SIZE + 1> spacesRight{}; // the last element will stay 0
 
 	int bestArea = 0;
@@ -135,10 +131,10 @@ float BiggestRectangleScoringFunction::operator()(const raw_board_t& board) cons
 		// spacesRight will contain the number of spaces to the
 		// right of each square in the current column (the j-th)
 		for (int i = 0; i < app::BOARD_SIZE; ++i) {
-			if (boardData[i][j] == game::pieceNone.id) {
-				++spacesRight[i];
-			} else {
+			if (raw::usedAt(board, i, j)) {
 				spacesRight[i] = 0;
+			} else {
+				++spacesRight[i];
 			}
 		}
 
@@ -165,7 +161,7 @@ float BiggestRectangleScoringFunction::operator()(const raw_board_t& board) cons
 		}
 	}
 
-	return maxScore * bestArea / (app::BOARD_SIZE * app::BOARD_SIZE);*/return 0.1f;
+	return maxScore * bestArea / (app::BOARD_SIZE * app::BOARD_SIZE);
 }
 
 
