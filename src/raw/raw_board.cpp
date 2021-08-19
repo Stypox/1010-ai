@@ -1,7 +1,6 @@
 #include "raw_board.hpp"
 
 #include <iostream>
-#include <bit>
 
 #include "raw/raw_piece.hpp"
 #include "game/game.hpp"
@@ -21,28 +20,9 @@ bool fitsPieceAt(const raw_board_t& board, board_index_t i, board_index_t j, pie
 	return (board & pieceMaskShifted(i, j, id)) == 0;
 }
 
-inline bool fitsPieceAtNoBoundaryChecks(const raw_board_t& board, board_index_t i, board_index_t j, piece_id_t id) {
+bool fitsPieceAtNoBoundaryChecks(const raw_board_t& board, board_index_t i, board_index_t j, piece_id_t id) {
 	return (board & pieceMaskShifted(i, j, id)) == 0;
 }
-
-board_index_t fitsHowManyTimes(const raw_board_t& board, piece_id_t id) {
-	if (id == 19) { // pieceSingle
-		return app::BOARD_SIZE * app::BOARD_SIZE
-			- std::popcount((uint64_t) board) // popcount does not support uint128_t
-			- std::popcount((uint64_t) (board >> 64));
-	}
-
-	board_index_t result = 0;
-	for (int i = 0; i < app::BOARD_SIZE - raw::pieceHeight[id] + 1; ++i) {
-		for (int j = 0; j < app::BOARD_SIZE - raw::pieceWidth[id] + 1; ++j) {
-			if (raw::fitsPieceAtNoBoundaryChecks(board, i, j, id)) {
-				++result;
-			}
-		}
-	}
-	return result;
-}
-
 
 constexpr raw_board_t verticalLineMask
 	= (((raw_board_t) 0b1000000000'1000000000'1000000000'1000000000'1000000000) << 50)

@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <stypox/argparser.hpp>
+#include <stypox/argparser.hpp>
 
 #include "app/application.hpp"
 #include "app/no_ui_application.hpp"
@@ -7,7 +7,6 @@
 #include "game/piece.hpp"
 #include "ai/scoring_function.hpp"
 
-/*
 void parseArguments(int argc,
 					char const* argv[],
 					bool& noUi,
@@ -90,7 +89,7 @@ void parseArguments(int argc,
 	argParser.validate();
 }
 
-int main(int argc, char const* argv[]) {
+/*int main(int argc, char const* argv[]) {
 	bool noUi = false;
 	ai::scoring_table_t scoringTable;
 	std::pair<float, int> connectedComponentsParams{0.0f, 1};

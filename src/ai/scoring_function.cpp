@@ -70,7 +70,13 @@ FittingPiecesScoringFunction::FittingPiecesScoringFunction(
 float FittingPiecesScoringFunction::operator()(const raw_board_t& board) const {
 	float score = 0.01f; // always greater than 0, so that it compares better than the score used as the base case
 	for (const auto& [id, partialScore] : scoringTable) {
-		score += raw::fitsHowManyTimes(board, id) * partialScore;
+		for (int i = 0; i < app::BOARD_SIZE - raw::pieceHeight[id] + 1; ++i) {
+			for (int j = 0; j < app::BOARD_SIZE - raw::pieceWidth[id] + 1; ++j) {
+				if (raw::fitsPieceAtNoBoundaryChecks(board, i, j, id)) {
+					score += partialScore;
+				}
+			}
+		}
 	}
 	return score;
 }
