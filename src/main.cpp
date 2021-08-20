@@ -89,7 +89,7 @@ void parseArguments(int argc,
 	argParser.validate();
 }
 
-/*int main(int argc, char const* argv[]) {
+int main(int argc, char const* argv[]) {
 	bool noUi = false;
 	ai::scoring_table_t scoringTable;
 	std::pair<float, int> connectedComponentsParams{0.0f, 1};
@@ -121,9 +121,4 @@ void parseArguments(int argc,
     } else {
         app::Application{game}.run();
     }
-}*/
-
-int main() {
-	app::Application{game::Game{{ai::FittingPiecesScoringFunction{ai::fastScoringTable}}}}.run();
-	//app::Application{game::Game{{ai::FittingPiecesScoringFunction{{{game::pieceSingle.id, 0.01f}}}}}}.run();
 }
