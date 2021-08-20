@@ -58,7 +58,7 @@ bool Game::getHasLost() const {
 }
 
 bool Game::getUseAi() const {
-    return hasLost;
+    return useAi;
 }
 
 
