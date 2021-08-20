@@ -109,8 +109,7 @@ void Game::tick() {
             pieces[usedIndex] = pieceNone.id;
         }
         if (moves.empty()) {
-            std::cout << "The ai provided no moves\n";
-            useAi = false;
+            hasLost = true; // The ai provided no moves, so it has lost
             return;
         }
 
