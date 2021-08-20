@@ -35,9 +35,8 @@ void Game::calculateHasLost() {
 
 Game::Game(const ai::Ai& ai)
         : ai{ai},
-        randomNumberGenerator{std::random_device{}()},
         distribution{0, allPiecesGameProbability.size() - 1} {
-    generateNewPieces();
+    reset();
 }
 
 
@@ -81,6 +80,11 @@ void Game::placePieceReleasedAt(int movedPiece, int i, int j) {
 void Game::reset() {
     score = 0;
     board = Board();
+
+    auto seed = std::random_device{}();
+    randomNumberGenerator = std::mt19937{seed},
+    std::cout << "Starting empty game with seed: " << seed << "\n";
+
     generateNewPieces();
     calculateHasLost();
 }
