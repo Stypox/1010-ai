@@ -19,7 +19,6 @@ class Board {
 
 public:
 	Board();
-	Board(const std::array<std::array<piece_id_t, app::BOARD_SIZE>, app::BOARD_SIZE>& data);
 
 	const std::array<std::array<piece_id_t, app::BOARD_SIZE>, app::BOARD_SIZE>& getData() const;
 	const raw_board_t& getRawData() const;

@@ -50,10 +50,7 @@ int Board::clearFullLinesAndColumns() {
 
 
 Board::Board()
-		: data{} {}
-
-Board::Board(const std::array<std::array<piece_id_t, app::BOARD_SIZE>, app::BOARD_SIZE>& data)
-		: data{data} {}
+		: data{}, rawData{0} {}
 
 
 const std::array<std::array<piece_id_t, app::BOARD_SIZE>, app::BOARD_SIZE>& Board::getData() const {
